@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>哪吒探针保活生成器</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --card2: #22263a;
+    --border: #2e3350;
+    --accent: #6c63ff;
+    --accent2: #4ecdc4;
+    --danger: #ff6b6b;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --success: #43e97b;
+    --warn: #f7971e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #1a1d27 0%, #12152a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 20px 24px;
+    text-align: center;
+  }
+  header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: .5px; }
+  header h1 span { color: var(--accent); }
+  header p { color: var(--muted); margin-top: 6px; font-size: .95rem; }
+  .badge {
+    display: inline-block; margin-top: 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 4px 14px;
+    font-size: .8rem; color: var(--accent2);
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 900px; margin: 0 auto; padding: 30px 16px 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:640px){ .grid2{ grid-template-columns:1fr; } }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 600;
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text);
+  }
+  .card-title .icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    background: var(--card2);
+  }
+
+  /* ── Form ── */
+  label { display: block; font-size: .82rem; color: var(--muted); margin-bottom: 5px; }
+  input[type=text], input[type=number], select {
+    width: 100%; background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 9px 12px;
+    color: var(--text); font-size: .9rem;
+    outline: none; transition: border .2s;
+  }
+  input:focus, select:focus { border-color: var(--accent); }
+  .form-group { margin-bottom: 14px; }
+  .hint { font-size: .78rem; color: var(--muted); margin-top: 4px; }
+
+  /* ── Toggle ── */
+  .toggle-wrap { display: flex; gap: 8px; }
+  .toggle-btn {
+    flex: 1; padding: 8px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card2); color: var(--muted);
+    cursor: pointer; font-size: .85rem; transition: all .2s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .toggle-btn.active {
+    background: var(--accent); border-color: var(--accent);
+    color: #fff; font-weight: 600;
+  }
+
+  /* ── Country Grid ── */
+  .country-search {
+    width: 100%; margin-bottom: 10px;
+  }
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+    gap: 6px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 4px 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .country-grid::-webkit-scrollbar { width: 5px; }
+  .country-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .c-btn {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2px; padding: 7px 4px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card2); cursor: pointer;
+    font-size: .7rem; color: var(--muted);
+    transition: all .15s; line-height: 1.2;
+    text-align: center;
+  }
+  .c-btn .flag { font-size: 1.35rem; line-height: 1; }
+  .c-btn:hover { border-color: var(--accent); color: var(--text); background: #2a2d45; }
+  .c-btn.selected { border-color: var(--accent2); background: #1c3a3a; color: var(--accent2); }
+
+  /* ── UUID List ── */
+  .uuid-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .uuid-row {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 10px;
+  }
+  .uuid-row .flag-big { font-size: 1.4rem; min-width: 26px; text-align: center; }
+  .uuid-row .uuid-val {
+    flex: 1; font-size: .78rem; color: var(--accent2);
+    font-family: monospace; word-break: break-all;
+  }
+  .uuid-row .cc {
+    font-size: .75rem; color: var(--muted);
+    background: var(--card); border-radius: 5px;
+    padding: 2px 7px; min-width: 34px; text-align: center;
+  }
+  .uuid-row .del-btn {
+    background: none; border: none; color: var(--danger);
+    cursor: pointer; font-size: 1rem; padding: 2px 4px;
+    border-radius: 5px; transition: background .15s;
+  }
+  .uuid-row .del-btn:hover { background: #2a1a1a; }
+  .add-uuid-btn {
+    width: 100%; padding: 9px;
+    background: none; border: 1px dashed var(--border);
+    border-radius: 10px; color: var(--accent);
+    cursor: pointer; font-size: .88rem;
+    transition: all .2s;
+  }
+  .add-uuid-btn:hover { border-color: var(--accent); background: #1e1f35; }
+
+  /* ── Counter ── */
+  .counter {
+    display: flex; align-items: center; gap: 10px;
+    font-size: .85rem; color: var(--muted); margin-bottom: 10px;
+  }
+  .counter strong { color: var(--text); font-size: 1.1rem; }
+  .counter .limit { color: var(--warn); }
+  .counter .ok { color: var(--success); }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    width: 100%; padding: 12px;
+    background: linear-gradient(135deg, var(--accent), #9c59ff);
+    border: none; border-radius: 10px;
+    color: #fff; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .88; }
+  .btn-secondary {
+    padding: 8px 16px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-size: .85rem; cursor: pointer; transition: all .2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); }
+
+  /* ── Output ── */
+  .output-area {
+    background: #0d0f1a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: .8rem;
+    color: #a8dadc;
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.7;
+    min-height: 100px;
+    position: relative;
+  }
+  .copy-btn {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 7px; color: var(--text);
+    padding: 4px 12px; font-size: .78rem;
+    cursor: pointer; transition: all .2s;
+  }
+  .copy-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+  .copy-btn.copied { border-color: var(--success); color: var(--success); }
+
+  /* ── Tab ── */
+  .tabs { display: flex; gap: 4px; margin-bottom: 14px; }
+  .tab {
+    padding: 7px 18px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card2); color: var(--muted);
+    cursor: pointer; font-size: .85rem; transition: all .2s;
+  }
+  .tab.active {
+    background: var(--accent); border-color: var(--accent);
+    color: #fff; font-weight: 600;
+  }
+
+  /* ── Alert ── */
+  .alert {
+    border-radius: 8px; padding: 10px 14px;
+    font-size: .83rem; margin-bottom: 12px;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .alert-warn { background: #2a1f0a; border: 1px solid #5a3e10; color: var(--warn); }
+  .alert-info { background: #0e1e2a; border: 1px solid #1a4060; color: var(--accent2); }
+  .alert-success { background: #0a2a1a; border: 1px solid #1a5030; color: var(--success); }
+
+  /* ── Section title ── */
+  .sec-title {
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--text); margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .sep { height: 1px; background: var(--border); margin: 20px 0; }
+  .text-sm { font-size: .82rem; }
+  .text-muted { color: var(--muted); }
+  .mt8 { margin-top: 8px; }
+  .flex-end { display:flex; justify-content:flex-end; gap:8px; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛰️ 哪吒探针 <span>保活生成器</span></h1>
+  <p>自动生成 UUID · 国旗选择 · 一键生成保活命令</p>
+  <span class="badge">✨ 支持 200+ 国家 · 单次最多 30 个探针</span>
+</header>
+
+<div class="wrap">
+
+  <!-- Step 1: 面板配置 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">⚙️</span> 第一步：面板配置</div>
+    <div class="grid2">
+      <div class="form-group">
+        <label>面板地址（含端口）</label>
+        <input type="text" id="server" placeholder="nezha.com:443 或 1.2.3.4:8008">
+        <div class="hint">不需要 http:// 前缀</div>
+      </div>
+      <div class="form-group">
+        <label>通信密钥 Secret</label>
+        <input type="text" id="secret" placeholder="my-secret-key">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>是否启用 TLS</label>
+      <div class="toggle-wrap">
+        <button class="toggle-btn active" id="tls-true" onclick="setTls(true)">🔒 true（推荐 HTTPS）</button>
+        <button class="toggle-btn" id="tls-false" onclick="setTls(false)">🔓 false（HTTP）</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: 选择国家 + 添加探针 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🌍</span> 第二步：选择国家并添加探针</div>
+
+    <div class="alert alert-info">
+      💡 先点击下方选择一个国家旗帜，再点击「添加探针」，系统自动生成 UUID 并绑定该国家。
+    </div>
+
+    <!-- Country picker -->
+    <div class="form-group">
+      <label>搜索国家</label>
+      <input type="text" class="country-search" id="countrySearch" placeholder="输入国家名称或代码，如 US、Japan…" oninput="filterCountries()">
+    </div>
+    <div class="country-grid" id="countryGrid"></div>
+
+    <div class="sep"></div>
+
+    <!-- Selected country preview -->
+    <div id="selectedPreview" style="display:none; margin-bottom:14px;">
+      <div class="alert alert-success">
+        <span id="previewFlag" style="font-size:1.4rem"></span>
+        <span>已选：<strong id="previewName"></strong>（<span id="previewCode"></span>）— 点击「添加探针」生成 UUID</span>
+      </div>
+    </div>
+
+    <button class="add-uuid-btn" onclick="addProbe()">＋ 添加探针（自动生成 UUID）</button>
+
+    <div class="sep"></div>
+
+    <!-- UUID list -->
+    <div class="sec-title">
+      <span>已添加探针列表</span>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span id="countBadge" class="text-sm text-muted">0 / 30</span>
+        <button class="btn-secondary text-sm" onclick="clearAll()">🗑 清空</button>
+      </div>
+    </div>
+
+    <div id="uuidList" class="uuid-list"></div>
+    <div id="emptyHint" class="text-muted text-sm" style="text-align:center;padding:20px 0">
+      暂无探针，请先选择国家后点击「添加探针」
+    </div>
+  </div>
+
+  <!-- Step 3: 生成配置 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> 第三步：生成保活命令</div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('url')">🔗 API URL</button>
+      <button class="tab" onclick="switchTab('cron')">⏱ 计划任务命令</button>
+      <button class="tab" onclick="switchTab('multi')">🔀 多面板命令</button>
+    </div>
+
+    <div id="tab-url">
+      <div class="alert alert-info">📌 直接在浏览器或 curl 调用的 API 地址</div>
+      <div style="position:relative">
+        <div class="output-area" id="out-url">← 填写配置后点击「生成」按钮</div>
+        <button class="copy-btn" onclick="copyOut('out-url', this)">复制</button>
+      </div>
+    </div>
+
+    <div id="tab-cron" style="display:none">
+      <div class="alert alert-info">📌 粘贴到哪吒面板计划任务 → 执行命令，Cron: <code style="color:var(--warn)">*/30 * * * * *</code></div>
+      <div style="position:relative">
+        <div class="output-area" id="out-cron">← 填写配置后点击「生成」按钮</div>
+        <button class="copy-btn" onclick="copyOut('out-cron', this)">复制</button>
+      </div>
+    </div>
+
+    <div id="tab-multi" style="display:none">
+      <div class="alert alert-warn">⚠️ 多面板模式：请在下方再输入第二个面板地址和密钥</div>
+      <div class="grid2" style="margin-bottom:12px">
+        <div class="form-group">
+          <label>第二面板地址</label>
+          <input type="text" id="server2" placeholder="nezha2.com:8008">
+        </div>
+        <div class="form-group">
+          <label>第二面板密钥</label>
+          <input type="text" id="secret2" placeholder="secret2">
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label>第二面板 TLS</label>
+        <div class="toggle-wrap">
+          <button class="toggle-btn" id="tls2-true" onclick="setTls2(true)">🔒 true</button>
+          <button class="toggle-btn active" id="tls2-false" onclick="setTls2(false)">🔓 false</button>
+        </div>
+      </div>
+      <div style="position:relative">
+        <div class="output-area" id="out-multi">← 填写配置后点击「生成」按钮</div>
+        <button class="copy-btn" onclick="copyOut('out-multi', this)">复制</button>
+      </div>
+    </div>
+
+    <div class="flex-end">
+      <button class="btn-secondary" onclick="resetAll()">↺ 重置</button>
+      <button class="btn-primary" style="width:auto;padding:10px 32px" onclick="generate()">⚡ 生成命令</button>
+    </div>
+  </div>
+
+  <!-- 使用说明 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📖</span> 快速说明</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="alert alert-info" style="flex-direction:column;gap:4px">
+        <strong>计划任务 Cron</strong>
+        <code style="color:var(--warn);font-size:.85rem">*/30 * * * * *</code>
+        <span style="font-size:.78rem;color:var(--muted)">每 30 秒自动保活一次</span>
+      </div>
+      <div class="alert alert-info" style="flex-direction:column;gap:4px">
+        <strong>单次最多</strong>
+        <code style="color:var(--warn);font-size:.85rem">30 个探针</code>
+        <span style="font-size:.78rem;color:var(--muted)">超出请新建计划任务分拆</span>
+      </div>
+      <div class="alert alert-info" style="flex-direction:column;gap:4px">
+        <strong>执行服务器</strong>
+        <span style="font-size:.82rem">选可访问外网的稳定服务器</span>
+      </div>
+      <div class="alert alert-info" style="flex-direction:column;gap:4px">
+        <strong>API 端点</strong>
+        <code style="color:var(--accent2);font-size:.78rem;word-break:break-all">keep.nett.to/report</code>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ──────────────────────────────────────────────
+//  Country Data  (flag emoji + code + name)
+// ──────────────────────────────────────────────
+const COUNTRIES = [
+  ["🇨🇳","CN","中国"],["🇺🇸","US","美国"],["🇯🇵","JP","日本"],["🇬🇧","GB","英国"],
+  ["🇩🇪","DE","德国"],["🇫🇷","FR","法国"],["🇷🇺","RU","俄罗斯"],["🇰🇷","KR","韩国"],
+  ["🇧🇷","BR","巴西"],["🇮🇳","IN","印度"],["🇨🇦","CA","加拿大"],["🇦🇺","AU","澳大利亚"],
+  ["🇸🇬","SG","新加坡"],["🇭🇰","HK","香港"],["🇹🇼","TW","台湾"],["🇳🇱","NL","荷兰"],
+  ["🇸🇪","SE","瑞典"],["🇳🇴","NO","挪威"],["🇩🇰","DK","丹麦"],["🇫🇮","FI","芬兰"],
+  ["🇨🇭","CH","瑞士"],["🇦🇹","AT","奥地利"],["🇧🇪","BE","比利时"],["🇵🇱","PL","波兰"],
+  ["🇨🇿","CZ","捷克"],["🇭🇺","HU","匈牙利"],["🇷🇴","RO","罗马尼亚"],["🇺🇦","UA","乌克兰"],
+  ["🇬🇷","GR","希腊"],["🇵🇹","PT","葡萄牙"],["🇪🇸","ES","西班牙"],["🇮🇹","IT","意大利"],
+  ["🇲🇽","MX","墨西哥"],["🇦🇷","AR","阿根廷"],["🇨🇱","CL","智利"],["🇨🇴","CO","哥伦比亚"],
+  ["🇵🇪","PE","秘鲁"],["🇻🇪","VE","委内瑞拉"],["🇺🇾","UY","乌拉圭"],["🇧🇴","BO","玻利维亚"],
+  ["🇵🇾","PY","巴拉圭"],["🇪🇨","EC","厄瓜多尔"],["🇹🇷","TR","土耳其"],["🇸🇦","SA","沙特阿拉伯"],
+  ["🇮🇱","IL","以色列"],["🇦🇪","AE","阿联酋"],["🇮🇷","IR","伊朗"],["🇮🇶","IQ","伊拉克"],
+  ["🇯🇴","JO","约旦"],["🇱🇧","LB","黎巴嫩"],["🇰🇼","KW","科威特"],["🇶🇦","QA","卡塔尔"],
+  ["🇴🇲","OM","阿曼"],["🇧🇭","BH","巴林"],["🇾🇪","YE","也门"],["🇸🇾","SY","叙利亚"],
+  ["🇦🇫","AF","阿富汗"],["🇵🇰","PK","巴基斯坦"],["🇧🇩","BD","孟加拉国"],["🇱🇰","LK","斯里兰卡"],
+  ["🇳🇵","NP","尼泊尔"],["🇲🇲","MM","缅甸"],["🇹🇭","TH","泰国"],["🇻🇳","VN","越南"],
+  ["🇵🇭","PH","菲律宾"],["🇮🇩","ID","印度尼西亚"],["🇲🇾","MY","马来西亚"],["🇰🇭","KH","柬埔寨"],
+  ["🇱🇦","LA","老挝"],["🇧🇳","BN","文莱"],["🇹🇱","TL","东帝汶"],["🇲🇳","MN","蒙古"],
+  ["🇰🇿","KZ","哈萨克斯坦"],["🇺🇿","UZ","乌兹别克斯坦"],["🇹🇲","TM","土库曼斯坦"],
+  ["🇰🇬","KG","吉尔吉斯斯坦"],["🇹🇯","TJ","塔吉克斯坦"],["🇦🇿","AZ","阿塞拜疆"],
+  ["🇬🇪","GE","格鲁吉亚"],["🇦🇲","AM","亚美尼亚"],["🇿🇦","ZA","南非"],["🇳🇬","NG","尼日利亚"],
+  ["🇪🇬","EG","埃及"],["🇰🇪","KE","肯尼亚"],["🇬🇭","GH","加纳"],["🇪🇹","ET","埃塞俄比亚"],
+  ["🇹🇿","TZ","坦桑尼亚"],["🇺🇬","UG","乌干达"],["🇿🇲","ZM","赞比亚"],["🇿🇼","ZW","津巴布韦"],
+  ["🇲🇿","MZ","莫桑比克"],["🇲🇬","MG","马达加斯加"],["🇨🇮","CI","科特迪瓦"],["🇸🇳","SN","塞内加尔"],
+  ["🇨🇲","CM","喀麦隆"],["🇦🇴","AO","安哥拉"],["🇲🇦","MA","摩洛哥"],["🇩🇿","DZ","阿尔及利亚"],
+  ["🇹🇳","TN","突尼斯"],["🇱🇾","LY","利比亚"],["🇸🇩","SD","苏丹"],["🇷🇼","RW","卢旺达"],
+  ["🇩🇯","DJ","吉布提"],["🇸🇴","SO","索马里"],["🇪🇷","ER","厄立特里亚"],["🇲🇱","ML","马里"],
+  ["🇧🇫","BF","布基纳法索"],["🇳🇪","NE","尼日尔"],["🇨🇩","CD","刚果民主共和国"],
+  ["🇨🇬","CG","刚果共和国"],["🇬🇦","GA","加蓬"],["🇬🇶","GQ","赤道几内亚"],["🇸🇹","ST","圣多美和普林西比"],
+  ["🇨🇻","CV","佛得角"],["🇬🇼","GW","几内亚比绍"],["🇬🇳","GN","几内亚"],["🇸🇱","SL","塞拉利昂"],
+  ["🇱🇷","LR","利比里亚"],["🇹🇬","TG","多哥"],["🇧🇯","BJ","贝宁"],["🇬🇲","GM","冈比亚"],
+  ["🇲🇷","MR","毛里塔尼亚"],["🇲🇼","MW","马拉维"],["🇱🇸","LS","莱索托"],["🇸🇿","SZ","斯威士兰"],
+  ["🇧🇼","BW","博茨瓦纳"],["🇳🇦","NA","纳米比亚"],["🇨🇫","CF","中非共和国"],["🇹🇩","TD","乍得"],
+  ["🇧🇮","BI","布隆迪"],["🇰🇲","KM","科摩罗"],["🇸🇨","SC","塞舌尔"],["🇲🇺","MU","毛里求斯"],
+  ["🇫🇲","FM","密克罗尼西亚"],["🇵🇬","PG","巴布亚新几内亚"],["🇫🇯","FJ","斐济"],
+  ["🇸🇧","SB","所罗门群岛"],["🇻🇺","VU","瓦努阿图"],["🇸🇲","SM","萨摩亚"],["🇹🇴","TO","汤加"],
+  ["🇰🇮","KI","基里巴斯"],["🇳🇷","NR","瑙鲁"],["🇵🇼","PW","帕劳"],["🇲🇭","MH","马绍尔群岛"],
+  ["🇳🇿","NZ","新西兰"],["🇵🇫","PF","法属波利尼西亚"],["🇳🇨","NC","新喀里多尼亚"],
+  ["🇬🇺","GU","关岛"],["🇦🇶","AQ","南极洲"],["🇮🇸","IS","冰岛"],["🇮🇪","IE","爱尔兰"],
+  ["🇱🇺","LU","卢森堡"],["🇲🇹","MT","马耳他"],["🇨🇾","CY","塞浦路斯"],["🇪🇪","EE","爱沙尼亚"],
+  ["🇱🇻","LV","拉脱维亚"],["🇱🇹","LT","立陶宛"],["🇧🇾","BY","白俄罗斯"],["🇲🇩","MD","摩尔多瓦"],
+  ["🇷🇸","RS","塞尔维亚"],["🇭🇷","HR","克罗地亚"],["🇧🇦","BA","波黑"],["🇲🇰","MK","北马其顿"],
+  ["🇦🇱","AL","阿尔巴尼亚"],["🇲🇪","ME","黑山"],["🇸🇰","SK","斯洛伐克"],["🇸🇮","SI","斯洛文尼亚"],
+  ["🇧🇬","BG","保加利亚"],["🇱🇮","LI","列支敦士登"],["🇦🇩","AD","安道尔"],["🇲🇨","MC","摩纳哥"],
+  ["🇸🇲","SM","圣马力诺"],["🇻🇦","VA","梵蒂冈"],["🇯🇲","JM","牙买加"],["🇨🇺","CU","古巴"],
+  ["🇭🇹","HT","海地"],["🇩🇴","DO","多米尼加"],["🇵🇷","PR","波多黎各"],["🇹🇹","TT","特立尼达和多巴哥"],
+  ["🇧🇧","BB","巴巴多斯"],["🇱🇨","LC","圣卢西亚"],["🇻🇨","VC","圣文森特"],["🇬🇩","GD","格林纳达"],
+  ["🇦🇬","AG","安提瓜和巴布达"],["🇩🇲","DM","多米尼克"],["🇰🇳","KN","圣基茨"],["🇧🇿","BZ","伯利兹"],
+  ["🇬🇹","GT","危地马拉"],["🇭🇳","HN","洪都拉斯"],["🇸🇻","SV","萨尔瓦多"],["🇳🇮","NI","尼加拉瓜"],
+  ["🇨🇷","CR","哥斯达黎加"],["🇵🇦","PA","巴拿马"],["🇬🇾","GY","圭亚那"],["🇸🇷","SR","苏里南"],
+  ["🇹🇱","TL","东帝汶"],["🇲🇻","MV","马尔代夫"],["🇧🇹","BT","不丹"],["🇲🇴","MO","澳门"],
+  ["🇰🇵","KP","朝鲜"],["🇹🇻","TV","图瓦卢"],["🇨🇰","CK","库克群岛"],["🇼🇸","WS","萨摩亚"],
+  ["🇳🇺","NU","纽埃"],["🇫🇰","FK","福克兰群岛"],["🇬🇮","GI","直布罗陀"],["🇧🇲","BM","百慕大"],
+  ["🇰🇾","KY","开曼群岛"],["🇻🇬","VG","英属维尔京群岛"],["🇦🇼","AW","阿鲁巴"],["🇨🇼","CW","库拉索"]
+];
+
+// ──────────────────────────────────────────────
+//  State
+// ──────────────────────────────────────────────
+let selectedCountry = null; // { flag, code, name }
+let probes = [];             // { uuid, flag, code, name }
+let tlsValue = true;
+let tls2Value = false;
+let currentTab = 'url';
+
+// ──────────────────────────────────────────────
+//  UUID v4 generator
+// ──────────────────────────────────────────────
+function uuidv4() {
+  if (crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+// ──────────────────────────────────────────────
+//  Render country grid
+// ──────────────────────────────────────────────
+function renderCountries(filter) {
+  const grid = document.getElementById('countryGrid');
+  const q = (filter || '').toLowerCase();
+  const list = q
+    ? COUNTRIES.filter(c => c[1].toLowerCase().includes(q) || c[2].includes(q) || c[0].includes(q))
+    : COUNTRIES;
+  grid.innerHTML = list.map(([flag, code, name]) => `
+    <button class="c-btn ${selectedCountry && selectedCountry.code===code ? 'selected':''}"
+      onclick="selectCountry('${flag}','${code}','${name}')">
+      <span class="flag">${flag}</span>
+      <span>${code}</span>
+    </button>
+  `).join('');
+}
+
+function filterCountries() {
+  renderCountries(document.getElementById('countrySearch').value);
+}
+
+function selectCountry(flag, code, name) {
+  selectedCountry = { flag, code, name };
+  renderCountries(document.getElementById('countrySearch').value);
+  // show preview
+  document.getElementById('selectedPreview').style.display = '';
+  document.getElementById('previewFlag').textContent = flag;
+  document.getElementById('previewName').textContent = name;
+  document.getElementById('previewCode').textContent = code;
+}
+
+// ──────────────────────────────────────────────
+//  Probe management
+// ──────────────────────────────────────────────
+function addProbe() {
+  if (!selectedCountry) { alert('请先点击选择一个国家！'); return; }
+  if (probes.length >= 30) { alert('⚠️ 单次最多 30 个探针！请新建计划任务分拆。'); return; }
+  probes.push({
+    uuid: uuidv4(),
+    flag: selectedCountry.flag,
+    code: selectedCountry.code,
+    name: selectedCountry.name
+  });
+  renderProbeList();
+}
+
+function removeProbe(idx) {
+  probes.splice(idx, 1);
+  renderProbeList();
+}
+
+function clearAll() {
+  if (probes.length && !confirm('确认清空所有探针？')) return;
+  probes = [];
+  renderProbeList();
+}
+
+function renderProbeList() {
+  const list = document.getElementById('uuidList');
+  const hint = document.getElementById('emptyHint');
+  const badge = document.getElementById('countBadge');
+
+  badge.textContent = `${probes.length} / 30`;
+  badge.className = probes.length >= 30 ? 'text-sm limit' : 'text-sm ok';
+
+  if (!probes.length) {
+    list.innerHTML = '';
+    hint.style.display = '';
+    return;
+  }
+  hint.style.display = 'none';
+  list.innerHTML = probes.map((p, i) => `
+    <div class="uuid-row">
+      <span class="flag-big">${p.flag}</span>
+      <span class="uuid-val">${p.uuid}</span>
+      <span class="cc">${p.code}</span>
+      <button class="del-btn" title="删除" onclick="removeProbe(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+// ──────────────────────────────────────────────
+//  TLS toggles
+// ──────────────────────────────────────────────
+function setTls(v) {
+  tlsValue = v;
+  document.getElementById('tls-true').className = 'toggle-btn' + (v ? ' active' : '');
+  document.getElementById('tls-false').className = 'toggle-btn' + (!v ? ' active' : '');
+}
+function setTls2(v) {
+  tls2Value = v;
+  document.getElementById('tls2-true').className = 'toggle-btn' + (v ? ' active' : '');
+  document.getElementById('tls2-false').className = 'toggle-btn' + (!v ? ' active' : '');
+}
+
+// ──────────────────────────────────────────────
+//  Tabs
+// ──────────────────────────────────────────────
+function switchTab(t) {
+  currentTab = t;
+  ['url','cron','multi'].forEach(x => {
+    document.getElementById('tab-'+x).style.display = x===t ? '' : 'none';
+    document.querySelectorAll('.tab')[['url','cron','multi'].indexOf(x)].className = 'tab' + (x===t?' active':'');
+  });
+}
+
+// ──────────────────────────────────────────────
+//  Generate
+// ──────────────────────────────────────────────
+function generate() {
+  const server = document.getElementById('server').value.trim();
+  const secret = document.getElementById('secret').value.trim();
+
+  if (!server) { alert('请填写面板地址！'); return; }
+  if (!secret) { alert('请填写通信密钥！'); return; }
+  if (!probes.length) { alert('请先添加至少一个探针！'); return; }
+
+  const uuidParam = probes.map(p => `${p.uuid}:${p.code}`).join(',');
+  const apiUrl = `https://keep.nett.to/report?server=${server}&secret=${secret}&tls=${tlsValue}&uuid=${uuidParam}`;
+
+  // ── URL tab ──
+  document.getElementById('out-url').textContent = apiUrl;
+
+  // ── Cron tab ──
+  const cronCmd = buildCronCmd([{ url: apiUrl }]);
+  document.getElementById('out-cron').textContent = cronCmd;
+
+  // ── Multi tab ──
+  const server2 = document.getElementById('server2').value.trim();
+  const secret2 = document.getElementById('secret2').value.trim();
+  if (server2 && secret2) {
+    const url2 = `https://keep.nett.to/report?server=${server2}&secret=${secret2}&tls=${tls2Value}&uuid=${uuidParam}`;
+    document.getElementById('out-multi').textContent = buildCronCmd([{ url: apiUrl }, { url: url2 }]);
+  } else {
+    document.getElementById('out-multi').textContent =
+      '← 请填写第二个面板的地址和密钥，再点击「生成」\n\n' + buildCronCmd([{ url: apiUrl }]);
+  }
+}
+
+function buildCronCmd(urls) {
+  const lines = urls.map(u => `  "${u.url}"`).join('\n');
+  return `urls=(\n${lines}\n)\n\nfor url in "\${urls[@]}"; do\n  curl -s \\\n    -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36" \\\n    -H "Accept-Language: zh-CN,zh;q=0.9" \\\n    -H "Cache-Control: no-cache" \\\n    "$url" &\ndone\nwait`;
+}
+
+// ──────────────────────────────────────────────
+//  Copy
+// ──────────────────────────────────────────────
+function copyOut(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ 已复制';
+    btn.className = 'copy-btn copied';
+    setTimeout(() => { btn.textContent = '复制'; btn.className = 'copy-btn'; }, 2000);
+  });
+}
+
+// ──────────────────────────────────────────────
+//  Reset
+// ──────────────────────────────────────────────
+function resetAll() {
+  if (!confirm('确认重置所有内容？')) return;
+  document.getElementById('server').value = '';
+  document.getElementById('secret').value = '';
+  document.getElementById('server2').value = '';
+  document.getElementById('secret2').value = '';
+  probes = [];
+  selectedCountry = null;
+  document.getElementById('selectedPreview').style.display = 'none';
+  setTls(true); setTls2(false);
+  renderProbeList();
+  renderCountries();
+  ['out-url','out-cron','out-multi'].forEach(id => {
+    document.getElementById(id).textContent = '← 填写配置后点击「生成」按钮';
+  });
+}
+
+// ──────────────────────────────────────────────
+//  Init
+// ──────────────────────────────────────────────
+renderCountries();
+renderProbeList();
+</script>
+</body>
+</html>
