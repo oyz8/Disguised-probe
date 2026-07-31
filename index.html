@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -35,17 +34,8 @@
             --transition-fast: 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
             --transition: 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            -webkit-font-smoothing: antialiased;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { -webkit-font-smoothing: antialiased; }
         body {
             background: var(--bg);
             color: var(--text);
@@ -55,7 +45,6 @@
             letter-spacing: -0.01em;
             padding-bottom: 60px;
         }
-
         header {
             background: rgba(255, 255, 255, 0.72);
             backdrop-filter: blur(24px) saturate(180%);
@@ -72,7 +61,6 @@
             flex-direction: column;
             overflow: visible;
         }
-
         header h1 {
             font-size: 1.75rem;
             font-weight: 700;
@@ -82,1266 +70,497 @@
             justify-content: center;
             gap: 8px;
         }
-
         .logo-img {
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             border-radius: 11px;
             vertical-align: middle;
         }
-
         header h1 span.accent {
             background: linear-gradient(135deg, #0071e3, #5ac8fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         header p {
             color: var(--text-secondary);
             margin-top: 6px;
             font-size: 0.95rem;
         }
-
         /* GitHub 三角形角标 */
         .github-corner-wrapper {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 80px;
-            height: 80px;
-            z-index: 9999;
-            pointer-events: none;
+            position: fixed; top: 0; right: 0; width: 80px; height: 80px; z-index: 9999; pointer-events: none;
         }
-
         .github-corner {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 0;
-            height: 0;
+            position: absolute; top: 0; right: 0; width: 0; height: 0;
             border-style: solid;
             border-width: 0 80px 80px 0;
             border-color: transparent #1d1d1f transparent transparent;
             transform: scale(0);
             transform-origin: top right;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            pointer-events: auto;
+            cursor: pointer; pointer-events: auto;
         }
-
-        .github-corner.expanded {
-            transform: scale(1);
-        }
-
+        .github-corner.expanded { transform: scale(1); }
         .github-corner svg {
-            position: absolute;
-            top: 5px;
-            right: -70px;
-            width: 36px;
-            height: 36px;
-            fill: #ffffff;
-            pointer-events: none;
-            transition: opacity 0.2s;
+            position: absolute; top: 5px; right: -70px; width: 36px; height: 36px;
+            fill: #ffffff; pointer-events: none; transition: opacity 0.2s;
         }
-
         .github-hotzone {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 80px;
-            height: 80px;
-            cursor: pointer;
-            z-index: 10000;
+            position: fixed; top: 0; right: 0; width: 80px; height: 80px; cursor: pointer; z-index: 10000;
         }
-
         @media(max-width:640px) {
-            .github-corner-wrapper {
-                width: 65px;
-                height: 65px;
-            }
-
-            .github-corner {
-                border-width: 0 65px 65px 0;
-            }
-
-            .github-corner svg {
-                width: 30px;
-                height: 30px;
-                top: 3px;
-                right: -57px;
-            }
-
-            .github-hotzone {
-                width: 65px;
-                height: 65px;
-            }
+            .github-corner-wrapper { width: 65px; height: 65px; }
+            .github-corner { border-width: 0 65px 65px 0; }
+            .github-corner svg { width: 30px; height: 30px; top: 3px; right: -57px; }
+            .github-hotzone { width: 65px; height: 65px; }
         }
-
-        .wrap {
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 28px 16px 0;
-        }
-
+        .wrap { max-width: 820px; margin: 0 auto; padding: 28px 16px 0; }
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 26px 28px;
-            margin-bottom: 18px;
-            box-shadow: var(--shadow-sm);
-            transition: box-shadow var(--transition);
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 26px 28px; margin-bottom: 18px;
+            box-shadow: var(--shadow-sm); transition: box-shadow var(--transition);
             animation: fadeInUp 0.4s ease forwards;
         }
-
-        .card:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .card:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .card:nth-child(2) {
-            animation-delay: 0.06s;
-        }
-
-        .card:nth-child(3) {
-            animation-delay: 0.12s;
-        }
-
-        .card:nth-child(4) {
-            animation-delay: 0.18s;
-        }
-
+        .card:hover { box-shadow: var(--shadow-md); }
         .card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+            padding-bottom: 14px; border-bottom: 1px solid var(--border);
         }
-
         .step-num {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: #fff;
-            font-size: 0.82rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            width: 30px; height: 30px; border-radius: 50%; background: var(--accent);
+            color: #fff; font-size: 0.82rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-
-        .card-title {
-            font-size: 1.05rem;
-            font-weight: 650;
-            letter-spacing: -0.01em;
-        }
-
-        .grid2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
-        @media(max-width:600px) {
-            .grid2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--text);
-        }
-
-        label .label-sub {
-            font-weight: 400;
-            color: var(--text-tertiary);
-            font-size: 0.75rem;
-            margin-left: 4px;
-        }
-
-        input[type=text],
-        select {
-            width: 100%;
-            background: #f9f9fb;
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 11px 14px;
-            color: var(--text);
-            font-size: 0.9rem;
-            font-family: var(--font-stack);
-            outline: none;
+        .card-title { font-size: 1.05rem; font-weight: 650; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        @media(max-width:600px){ .grid2{ grid-template-columns:1fr; } }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; color: var(--text); }
+        label .label-sub { font-weight: 400; color: var(--text-tertiary); font-size: 0.75rem; margin-left: 4px; }
+        input[type=text], select {
+            width: 100%; background: #f9f9fb; border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm); padding: 11px 14px; color: var(--text);
+            font-size: 0.9rem; font-family: var(--font-stack); outline: none;
             transition: all var(--transition-fast);
         }
-
-        input:focus,
-        select:focus {
-            border-color: var(--border-focus);
-            background: #fff;
+        input:focus, select:focus {
+            border-color: var(--border-focus); background: #fff;
             box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.08);
         }
-
-        input::placeholder {
-            color: #c7c7cc;
-        }
-
-        .hint {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            margin-top: 4px;
-        }
-
-        .segmented-control {
-            display: inline-flex;
-            background: #f1f1f5;
-            border-radius: 10px;
-            padding: 3px;
-            gap: 2px;
-        }
-
+        .hint { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px; }
+        .segmented-control { display: inline-flex; background: #f1f1f5; border-radius: 10px; padding: 3px; gap: 2px; }
         .seg-btn {
-            padding: 8px 18px;
-            border-radius: 8px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.84rem;
-            font-weight: 500;
-            font-family: var(--font-stack);
-            transition: all var(--transition-fast);
-            white-space: nowrap;
+            padding: 8px 18px; border-radius: 8px; border: none; background: transparent;
+            color: var(--text-secondary); cursor: pointer; font-size: 0.84rem; font-weight: 500;
+            font-family: var(--font-stack); transition: all var(--transition-fast); white-space: nowrap;
         }
-
-        .seg-btn.active {
-            background: #fff;
-            color: var(--text);
-            font-weight: 600;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        .seg-btn:hover:not(.active) {
-            color: var(--text);
-        }
-
-        .country-trigger-wrap {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
+        .seg-btn.active { background: #fff; color: var(--text); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .country-trigger-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
         .country-trigger {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 18px;
-            border-radius: var(--radius);
-            border: 2px dashed var(--border);
-            background: #fafafc;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text);
-            font-family: var(--font-stack);
-            transition: all var(--transition-fast);
-            width: 100%;
-            justify-content: center;
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px;
+            border-radius: var(--radius); border: 2px dashed var(--border); background: #fafafc;
+            cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--text);
+            font-family: var(--font-stack); transition: all var(--transition-fast); width: 100%; justify-content: center;
         }
-
-        .country-trigger:hover {
-            border-color: var(--accent);
-            background: var(--accent-subtle);
-        }
-
+        .country-trigger:hover { border-color: var(--accent); background: var(--accent-subtle); }
         .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
+            z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
-
-        .modal-overlay.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
         .modal-dialog {
-            background: #fff;
-            border-radius: var(--radius-xl);
-            width: 100%;
-            max-width: 640px;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-xl);
-            transform: translateY(20px) scale(0.97);
-            transition: transform 0.3s ease;
-            overflow: hidden;
+            background: #fff; border-radius: var(--radius-xl); width: 100%; max-width: 640px;
+            max-height: 80vh; display: flex; flex-direction: column; box-shadow: var(--shadow-xl);
+            transform: translateY(20px) scale(0.97); transition: transform 0.3s ease; overflow: hidden;
         }
-
-        .modal-overlay.open .modal-dialog {
-            transform: translateY(0) scale(1);
-        }
-
-        .modal-header {
-            padding: 20px 22px 14px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .modal-header h3 {
-            font-size: 1.1rem;
-            font-weight: 650;
-        }
-
-        .modal-close {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: none;
-            background: #f1f1f5;
-            cursor: pointer;
-            font-size: 1rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close:hover {
-            background: #e5e5ea;
-        }
-
-        .modal-search {
-            padding: 12px 22px;
-        }
-
-        .modal-search input {
-            width: 100%;
-            padding: 11px 14px;
-            border-radius: var(--radius-sm);
-            border: 1.5px solid var(--border);
-            background: #f9f9fb;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .modal-search input:focus {
-            border-color: var(--border-focus);
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.06);
-        }
-
-        .modal-body {
-            padding: 8px 16px 18px;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .country-grid-modal {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 8px;
-        }
-
+        .modal-overlay.open .modal-dialog { transform: translateY(0) scale(1); }
+        .modal-header { padding: 20px 22px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h3 { font-size: 1.1rem; font-weight: 650; }
+        .modal-close { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f1f1f5; cursor: pointer; }
+        .modal-search { padding: 12px 22px; }
+        .modal-search input { width: 100%; padding: 11px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: #f9f9fb; }
+        .modal-body { padding: 8px 16px 18px; overflow-y: auto; flex: 1; }
+        .country-grid-modal { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
         .c-btn-modal {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 12px;
-            border-radius: var(--radius-sm);
-            border: 1.5px solid transparent;
-            background: #fafafc;
-            cursor: pointer;
-            font-size: 0.82rem;
-            color: var(--text);
-            transition: all var(--transition-fast);
-            text-align: left;
+            display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+            border-radius: var(--radius-sm); border: 1.5px solid transparent; background: #fafafc;
+            cursor: pointer; font-size: 0.82rem; color: var(--text); transition: all var(--transition-fast);
         }
-
-        .c-btn-modal:hover {
-            background: #f0f0f5;
-            border-color: #d5d5da;
-        }
-
-        .c-btn-modal .flag-modal {
-            font-size: 1.4rem;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-        }
-
-        .c-btn-modal .info-modal {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .c-btn-modal .name-modal {
-            font-weight: 500;
-            font-size: 0.8rem;
-        }
-
-        .c-btn-modal .code-modal {
-            font-size: 0.7rem;
-            color: var(--text-tertiary);
-        }
-
-        .probe-summary {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .probe-count {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .probe-count strong {
-            color: var(--text);
-            font-weight: 700;
-        }
-
-        .uuid-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-
+        .c-btn-modal:hover { background: #f0f0f5; border-color: #d5d5da; }
+        .flag-modal { font-size: 1.4rem; line-height: 1; display: flex; align-items: center; }
+        .flag-modal img { width: 22px; height: 16px; border-radius: 2px; }
+        .info-modal { display: flex; flex-direction: column; }
+        .name-modal { font-weight: 500; font-size: 0.8rem; }
+        .code-modal { font-size: 0.7rem; color: var(--text-tertiary); }
+        .probe-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .probe-count { font-size: 0.85rem; color: var(--text-secondary); }
+        .uuid-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
         .uuid-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #fafafc;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            transition: all var(--transition-fast);
+            display: flex; align-items: center; gap: 10px; background: #fafafc;
+            border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px;
         }
-
-        .uuid-row:hover {
-            border-color: #c5c5cc;
-            box-shadow: var(--shadow-sm);
+        .flag-big { font-size: 1.5rem; line-height: 1; display: flex; align-items: center; }
+        .flag-big img { width: 24px; height: 18px; border-radius: 2px; }
+        .country-name-tag { font-size: 0.78rem; font-weight: 600; min-width: 50px; }
+        .uuid-input {
+            flex: 1; font-size: 0.76rem; color: var(--accent); font-family: var(--font-mono);
+            background: transparent; border: 1px solid transparent; padding: 4px 6px;
+            border-radius: 6px; outline: none; word-break: break-all;
         }
-
-        .uuid-row .flag-big {
-            font-size: 1.5rem;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-        }
-
-        .uuid-row .country-name-tag {
-            font-size: 0.78rem;
-            font-weight: 600;
-            min-width: 50px;
-        }
-
-        .uuid-row .uuid-input {
-            flex: 1;
-            font-size: 0.76rem;
-            color: var(--accent);
-            font-family: var(--font-mono);
-            background: transparent;
-            border: 1px solid transparent;
-            padding: 4px 6px;
-            border-radius: 6px;
-            outline: none;
-            transition: all var(--transition-fast);
-            letter-spacing: -0.02em;
-            word-break: break-all;
-        }
-
-        .uuid-row .uuid-input:hover {
-            border-color: #d0d0d5;
-            background: #fff;
-        }
-
-        .uuid-row .uuid-input:focus {
-            border-color: var(--accent);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
-        }
-
-        .uuid-row .cc-badge {
-            font-size: 0.7rem;
-            color: var(--text-tertiary);
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 3px 8px;
-            flex-shrink: 0;
-        }
-
-        .uuid-row .del-btn {
-            background: none;
-            border: none;
-            color: var(--text-tertiary);
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 4px 6px;
-            border-radius: 6px;
-            flex-shrink: 0;
-        }
-
-        .uuid-row .del-btn:hover {
-            background: var(--danger-light);
-            color: var(--danger);
-        }
-
-        .empty-hint {
-            text-align: center;
-            padding: 28px 16px;
-            color: var(--text-tertiary);
-            border: 2px dashed var(--border);
-            border-radius: var(--radius);
-            margin-bottom: 14px;
-        }
-
-        .btn-clear {
-            padding: 6px 12px;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all var(--transition-fast);
-        }
-
-        .btn-clear:hover {
-            border-color: var(--danger);
-            color: var(--danger);
-            background: var(--danger-light);
-        }
-
-        .tabs-row {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 16px;
-        }
-
+        .uuid-input:focus { border-color: var(--accent); background: #fff; }
+        .cc-badge { font-size: 0.7rem; background: #fff; border:1px solid var(--border); border-radius:6px; padding:3px 8px; }
+        .del-btn { background:none; border:none; color:var(--text-tertiary); cursor:pointer; font-size:1rem; }
+        .del-btn:hover { color: var(--danger); }
+        .empty-hint { text-align: center; padding: 28px 16px; color: var(--text-tertiary); border: 2px dashed var(--border); border-radius: var(--radius); margin-bottom: 14px; }
+        .btn-clear { padding: 6px 12px; background: #fff; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+        .tabs-row { display: flex; gap: 4px; margin-bottom: 16px; }
         .tab-pill {
-            padding: 9px 18px;
-            border-radius: 20px;
-            border: 1.5px solid var(--border);
-            background: #fff;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.84rem;
-            transition: all var(--transition-fast);
+            padding: 9px 18px; border-radius: 20px; border: 1.5px solid var(--border);
+            background: #fff; color: var(--text-secondary); cursor: pointer; font-size: 0.84rem;
         }
-
-        .tab-pill.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .tab-pill:hover:not(.active) {
-            background: #fafafc;
-        }
-
+        .tab-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
         .output-wrapper {
-            position: relative;
-            background: #1d1d1f;
-            border-radius: var(--radius);
-            padding: 18px 16px;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            color: #e0e0e0;
-            white-space: pre-wrap;
-            word-break: break-all;
-            line-height: 1.7;
-            min-height: 80px;
+            position: relative; background: #1d1d1f; border-radius: var(--radius);
+            padding: 18px 16px; font-family: var(--font-mono); font-size: 0.78rem;
+            color: #e0e0e0; white-space: pre-wrap; word-break: break-all; line-height: 1.7; min-height: 80px;
         }
-
-        .placeholder-output {
-            color: #6e6e73;
-            font-family: var(--font-stack);
-        }
-
+        .placeholder-output { color: #6e6e73; font-family: var(--font-stack); }
         .copy-btn-float {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 7px;
-            color: #fff;
-            padding: 5px 13px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            z-index: 5;
-            transition: all var(--transition-fast);
+            position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 7px; color: #fff;
+            padding: 5px 13px; font-size: 0.75rem; cursor: pointer; z-index: 5;
         }
-
-        .copy-btn-float:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .copy-btn-float.copied {
-            background: var(--success);
-            border-color: var(--success);
-        }
-
+        .copy-btn-float.copied { background: var(--success); }
         .btn-primary {
-            padding: 13px 28px;
-            background: var(--accent);
-            border: none;
-            border-radius: 25px;
-            color: #fff;
-            font-weight: 650;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all var(--transition-fast);
+            padding: 13px 28px; background: var(--accent); border: none; border-radius: 25px;
+            color: #fff; font-weight: 650; font-size: 0.95rem; cursor: pointer;
         }
-
-        .btn-primary:hover {
-            background: var(--accent-hover);
-        }
-
         .btn-secondary {
-            padding: 11px 20px;
-            background: #fff;
-            border: 1.5px solid var(--border);
-            border-radius: 25px;
-            color: var(--text);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all var(--transition-fast);
+            padding: 11px 20px; background: #fff; border: 1.5px solid var(--border);
+            border-radius: 25px; color: var(--text); font-weight: 500; cursor: pointer;
         }
-
-        .btn-secondary:hover {
-            border-color: #b5b5be;
-        }
-
-        .flex-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .info-box {
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            font-size: 0.82rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .info-box.info {
-            background: var(--accent-subtle);
-            border: 1px solid #d0e4f8;
-            color: #0059b3;
-        }
-
-        .info-box code {
-            background: rgba(0, 0, 0, 0.05);
-            padding: 2px 7px;
-            border-radius: 4px;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-        }
-
-        .guide-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .guide-item {
-            background: #fafafc;
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-        }
-
-        .guide-item strong {
-            font-size: 0.85rem;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .guide-item code {
-            font-family: var(--font-mono);
-            color: var(--accent);
-            background: rgba(0, 113, 227, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.73rem;
-        }
-
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 18px 0;
-        }
-
-        /* 底部签名 */
+        .flex-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+        .info-box { border-radius: var(--radius-sm); padding: 12px 16px; font-size: 0.82rem; display: flex; gap: 10px; }
+        .info-box.info { background: var(--accent-subtle); border:1px solid #d0e4f8; color:#0059b3; }
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .guide-item { background: #fafafc; border-radius: var(--radius-sm); padding: 14px 16px; border:1px solid var(--border); }
+        .divider { height:1px; background:var(--border); margin:18px 0; }
         .footer-signature {
-            text-align: center;
-            padding: 24px 16px 32px;
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
-            letter-spacing: -0.01em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            flex-wrap: wrap;
+            text-align: center; padding: 24px 16px 32px; font-size: 0.8rem;
+            color: var(--text-tertiary); display: flex; justify-content: center; gap: 6px;
         }
-
-        .footer-signature span {
-            opacity: 0.7;
-        }
-
-        .footer-signature .by-name {
-            font-weight: 600;
-            color: var(--text-secondary);
-            opacity: 1;
-        }
-
-        .footer-signature .dot-sep {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--text-tertiary);
-            opacity: 0.5;
-            display: inline-block;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media(max-width:640px) {
-            header {
-                padding: 22px 14px 18px;
-            }
-
-            header h1 {
-                font-size: 1.4rem;
-            }
-
-            .card {
-                padding: 18px 16px;
-            }
-
-            .country-grid-modal {
-                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-            }
-        }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
     </style>
 </head>
-
 <body>
-
-    <!-- GitHub 角标结构 -->
-    <div class="github-corner-wrapper">
-        <div class="github-corner" id="githubCorner">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-        </div>
+<div class="github-corner-wrapper">
+    <div class="github-corner" id="githubCorner">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
     </div>
-    <div class="github-hotzone" id="githubHotzone"></div>
+</div>
+<div class="github-hotzone" id="githubHotzone"></div>
 
-    <header>
-        <h1>
-            <img src="https://img.nezha.loc.cc/probe.svg" class="logo-img" alt="探针">
+<header>
+    <h1>
+        <img src="https://img.nezha.loc.cc/probe.svg" class="logo-img" alt="探针">
         探针 <span class="accent">命令生成器</span>
-        </h1>
-        <p>自动生成 UUID · 点击国家即刻添加 · 一键生成保活命令</p>
-    </header>
+    </h1>
+    <p>自动生成 UUID · 点击国家即刻添加 · 一键生成保活命令</p>
+</header>
 
-    <div class="wrap">
-        <!-- 第一步：面板配置 -->
-        <div class="card">
-            <div class="card-header">
-                <span class="step-num">1</span>
-                <span class="card-title">面板配置</span>
-            </div>
-            <div class="grid2">
-                <div class="form-group">
-                    <label>面板地址<span class="label-sub">（含端口）</span></label>
-                    <input type="text" id="server" placeholder="nezha.example.com:443">
-                    <div class="hint">无需 http:// 前缀</div>
-                </div>
-                <div class="form-group">
-                    <label>通信密钥 Secret</label>
-                    <input type="text" id="secret" placeholder="your-secret-key">
-                </div>
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-                <label>是否启用 TLS</label>
-                <div class="segmented-control">
-                    <button class="seg-btn active" id="tls-true" onclick="setTls(true)">🔒 开启</button>
-                    <button class="seg-btn" id="tls-false" onclick="setTls(false)">🔓 关闭</button>
-                </div>
-            </div>
+<div class="wrap">
+    <div class="card">
+        <div class="card-header"><span class="step-num">1</span><span class="card-title">面板配置</span></div>
+        <div class="grid2">
+            <div class="form-group"><label>面板地址<span class="label-sub">（含端口）</span></label><input type="text" id="server" placeholder="nezha.example.com:443"><div class="hint">无需 http:// 前缀</div></div>
+            <div class="form-group"><label>通信密钥 Secret</label><input type="text" id="secret" placeholder="your-secret-key"></div>
         </div>
+        <div class="form-group"><label>是否启用 TLS</label><div class="segmented-control"><button class="seg-btn active" onclick="setTls(true)">🔒 开启</button><button class="seg-btn" onclick="setTls(false)">🔓 关闭</button></div></div>
+    </div>
 
-        <!-- 第二步：探针列表与添加国家 -->
-        <div class="card">
-            <div class="card-header">
-                <span class="step-num">2</span>
-                <span class="card-title">探针管理与添加</span>
-            </div>
-
-            <!-- 1. 上方：已添加探针列表 -->
-            <div class="uuid-list" id="uuidList"></div>
-            <div class="empty-hint" id="emptyHint">📭 暂无探针，点击下方按钮选择国家直接添加</div>
-
-            <!-- 2. 中间：统计信息与清空按钮 -->
-            <div class="probe-summary">
-                <span class="probe-count" id="countBadge">已添加 <strong>0</strong> / 30 个探针</span>
-                <button class="btn-clear" id="clearAllBtn" onclick="clearAll()">🗑 清空全部</button>
-            </div>
-
-            <div class="divider"></div>
-
-            <!-- 3. 下方：国家选择/添加探针触发按钮 -->
-            <div class="country-trigger-wrap">
-                <button class="country-trigger" id="countryTrigger" onclick="openCountryModal()">
-                <span>➕ 点击选择国家并直接添加探针</span>
-            </button>
-            </div>
+    <div class="card">
+        <div class="card-header"><span class="step-num">2</span><span class="card-title">探针管理与添加</span></div>
+        <div class="uuid-list" id="uuidList"></div>
+        <div class="empty-hint" id="emptyHint">📭 暂无探针，点击下方按钮选择国家直接添加</div>
+        <div class="probe-summary">
+            <span class="probe-count" id="countBadge">已添加 <strong>0</strong> / 30 个探针</span>
+            <button class="btn-clear" onclick="clearAll()">🗑 清空全部</button>
         </div>
-
-        <!-- 第三步：生成命令 -->
-        <div class="card">
-            <div class="card-header">
-                <span class="step-num">3</span>
-                <span class="card-title">生成保活命令</span>
-            </div>
-
-            <div class="tabs-row">
-                <button class="tab-pill active" id="tabUrlBtn" onclick="switchTab('url')">🔗 API URL</button>
-                <button class="tab-pill" id="tabCronBtn" onclick="switchTab('cron')">⏱ 计划任务</button>
-            </div>
-
-            <div id="tab-url">
-                <div class="info-box info" style="margin-bottom:10px">📌 直接在浏览器或 curl 调用的 API 地址</div>
-                <div class="output-wrapper">
-                    <span class="placeholder-output" id="out-url">← 填写配置后点击「生成」按钮</span><button class="copy-btn-float" onclick="copyOut('out-url', this)">复制</button>
-                </div>
-            </div>
-
-            <div id="tab-cron" style="display:none">
-                <div class="info-box info" style="margin-bottom:10px">📌
-                    粘贴到哪吒面板计划任务，Cron：<code>*/30 * * * * *</code>（每30秒）</div>
-                <div class="output-wrapper">
-                    <span class="placeholder-output" id="out-cron">← 填写配置后点击「生成」按钮</span><button class="copy-btn-float" onclick="copyOut('out-cron', this)">复制</button>
-                </div>
-            </div>
-
-            <div class="flex-actions">
-                <button class="btn-secondary" id="resetBtn" onclick="resetAll()">↺ 重置</button>
-                <button class="btn-primary" onclick="generate()">⚡ 生成命令</button>
-            </div>
-        </div>
-
-        <!-- 快速说明 -->
-        <div class="card">
-            <div class="card-header">
-                <span class="step-num" style="background:#6e6e73">📖</span>
-                <span class="card-title">快速说明</span>
-            </div>
-            <div class="guide-grid">
-                <div class="guide-item"><strong>计划任务 Cron</strong><code>*/30 * * * * *</code> 每30秒自动保活</div>
-                <div class="guide-item"><strong>单次最多探针</strong><code>30 个</code> 超出请新建任务分拆</div>
-                <div class="guide-item"><strong>执行服务器</strong>选择可访问外网的稳定服务器</div>
-                <div class="guide-item"><strong>API 端点</strong><code>keep.nett.to/report</code></div>
-            </div>
+        <div class="divider"></div>
+        <div class="country-trigger-wrap">
+            <button class="country-trigger" onclick="openCountryModal()">➕ 点击选择国家并直接添加探针</button>
         </div>
     </div>
 
-    <!-- 底部签名 -->
-    <div class="footer-signature">
-        <span>Made with</span>
-        <span style="color:var(--danger);">🟢</span>
-        <span>by</span>
-        <span class="by-name">oyz8</span>
-        <span class="dot-sep"></span>
-        <span>Keep Alive Generator</span>
-    </div>
-
-    <!-- 国家选择模态框 -->
-    <div class="modal-overlay" id="countryModalOverlay" onclick="closeCountryModalOutside(event)">
-        <div class="modal-dialog" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3>🌍 选择国家直接添加</h3>
-                <button class="modal-close" onclick="closeCountryModal()">✕</button>
-            </div>
-            <div class="modal-search">
-                <input type="text" id="modalSearch" placeholder="搜索国家名称或代码，如 中国、US…" oninput="filterModalCountries()">
-            </div>
-            <div class="modal-body">
-                <div class="country-grid-modal" id="modalCountryGrid"></div>
-                <div class="modal-no-results" id="modalNoResults"
-                    style="display:none; text-align:center; padding:30px; color:var(--text-tertiary);">未找到匹配的国家或地区</div>
-            </div>
+    <div class="card">
+        <div class="card-header"><span class="step-num">3</span><span class="card-title">生成保活命令</span></div>
+        <div class="tabs-row">
+            <button class="tab-pill active" id="tabUrlBtn" onclick="switchTab('url')">🔗 API URL</button>
+            <button class="tab-pill" id="tabCronBtn" onclick="switchTab('cron')">⏱ 计划任务</button>
+        </div>
+        <div id="tab-url">
+            <div class="info-box info">📌 直接在浏览器或 curl 调用的 API 地址</div>
+            <div class="output-wrapper"><span class="placeholder-output" id="out-url">← 填写配置后点击「生成」按钮</span><button class="copy-btn-float" onclick="copyOut('out-url', this)">复制</button></div>
+        </div>
+        <div id="tab-cron" style="display:none">
+            <div class="info-box info">📌 粘贴到哪吒面板计划任务，Cron：<code>*/30 * * * * *</code></div>
+            <div class="output-wrapper"><span class="placeholder-output" id="out-cron">← 填写配置后点击「生成」按钮</span><button class="copy-btn-float" onclick="copyOut('out-cron', this)">复制</button></div>
+        </div>
+        <div class="flex-actions">
+            <button class="btn-secondary" onclick="resetAll()">↺ 重置</button>
+            <button class="btn-primary" onclick="generate()">⚡ 生成命令</button>
         </div>
     </div>
 
-    <script>
-        (function() {
-    // 国家数据列表 [国旗, 代码, 名称]
+    <div class="card">
+        <div class="card-header"><span class="step-num" style="background:#6e6e73">📖</span><span class="card-title">快速说明</span></div>
+        <div class="guide-grid">
+            <div class="guide-item"><strong>计划任务 Cron</strong><code>*/30 * * * * *</code> 每30秒自动保活</div>
+            <div class="guide-item"><strong>单次最多探针</strong><code>30 个</code> 超出请新建任务分拆</div>
+            <div class="guide-item"><strong>执行服务器</strong>选择可访问外网的稳定服务器</div>
+            <div class="guide-item"><strong>API 端点</strong><code>keep.nett.to/report</code></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-signature">
+    <span>Made with</span><span style="color:var(--danger);">🟢</span><span>by</span><span class="by-name">oyz8</span><span class="dot-sep"></span><span>Keep Alive Generator</span>
+</div>
+
+<div class="modal-overlay" id="countryModalOverlay" onclick="closeCountryModalOutside(event)">
+    <div class="modal-dialog" onclick="event.stopPropagation()">
+        <div class="modal-header"><h3>🌍 选择国家直接添加</h3><button class="modal-close" onclick="closeCountryModal()">✕</button></div>
+        <div class="modal-search"><input type="text" id="modalSearch" placeholder="搜索国家名称或代码" oninput="filterModalCountries()"></div>
+        <div class="modal-body"><div class="country-grid-modal" id="modalCountryGrid"></div><div id="modalNoResults" style="display:none;text-align:center;padding:30px;color:var(--text-tertiary);">未找到匹配的国家</div></div>
+    </div>
+</div>
+
+<script>
+    (function() {
         const COUNTRIES = [
-        ["🇨🇳","CN","中国"],["🇺🇸","US","美国"],["🇯🇵","JP","日本"],["🇬🇧","GB","英国"],
-        ["🇩🇪","DE","德国"],["🇫🇷","FR","法国"],["🇷🇺","RU","俄罗斯"],["🇰🇷","KR","韩国"],
-        ["🇧🇷","BR","巴西"],["🇮🇳","IN","印度"],["🇨🇦","CA","加拿大"],["🇦🇺","AU","澳大利亚"],
-        ["🇸🇬","SG","新加坡"],["🇭🇰","HK","香港"],["🇹🇼","TW","台湾"],["🇲🇴","MO","澳门"],
-        ["🇳🇱","NL","荷兰"],["🇸🇪","SE","瑞典"],["🇳🇴","NO","挪威"],["🇩🇰","DK","丹麦"],
-        ["🇫🇮","FI","芬兰"],["🇨🇭","CH","瑞士"],["🇦🇹","AT","奥地利"],["🇧🇪","BE","比利时"],
-        ["🇵🇱","PL","波兰"],["🇨🇿","CZ","捷克"],["🇭🇺","HU","匈牙利"],["🇷🇴","RO","罗马尼亚"],
-        ["🇺🇦","UA","乌克兰"],["🇬🇷","GR","希腊"],["🇵🇹","PT","葡萄牙"],["🇪🇸","ES","西班牙"],
-        ["🇮🇹","IT","意大利"],["🇲🇽","MX","墨西哥"],["🇦🇷","AR","阿根廷"],["🇨🇱","CL","智利"],
-        ["🇨🇴","CO","哥伦比亚"],["🇵🇪","PE","秘鲁"],["🇻🇪","VE","委内瑞拉"],["🇺🇾","UY","乌拉圭"],
-        ["🇧🇴","BO","玻利维亚"],["🇵🇾","PY","巴拉圭"],["🇪🇨","EC","厄瓜多尔"],["🇹🇷","TR","土耳其"],
-        ["🇸🇦","SA","沙特阿拉伯"],["🇮🇱","IL","以色列"],["🇦🇪","AE","阿联酋"],["🇮🇷","IR","伊朗"],
-        ["🇮🇶","IQ","伊拉克"],["🇯🇴","JO","约旦"],["🇱🇧","LB","黎巴嫩"],["🇰🇼","KW","科威特"],
-        ["🇶🇦","QA","卡塔尔"],["🇴🇲","OM","阿曼"],["🇧🇭","BH","巴林"],["🇾🇪","YE","也门"],
-        ["🇸🇾","SY","叙利亚"],["🇦🇫","AF","阿富汗"],["🇵🇰","PK","巴基斯坦"],["🇧🇩","BD","孟加拉国"],
-        ["🇱🇰","LK","斯里兰卡"],["🇳🇵","NP","尼泊尔"],["🇲🇲","MM","缅甸"],["🇹🇭","TH","泰国"],
-        ["🇻🇳","VN","越南"],["🇵🇭","PH","菲律宾"],["🇮🇩","ID","印度尼西亚"],["🇲🇾","MY","马来西亚"],
-        ["🇰🇭","KH","柬埔寨"],["🇱🇦","LA","老挝"],["🇧🇳","BN","文莱"],["🇹🇱","TL","东帝汶"],
-        ["🇲🇳","MN","蒙古"],["🇰🇿","KZ","哈萨克斯坦"],["🇺🇿","UZ","乌兹别克斯坦"],
-        ["🇹🇲","TM","土库曼斯坦"],["🇰🇬","KG","吉尔吉斯斯坦"],["🇹🇯","TJ","塔吉克斯坦"],
-        ["🇦🇿","AZ","阿塞拜疆"],["🇬🇪","GE","格鲁吉亚"],["🇦🇲","AM","亚美尼亚"],
-        ["🇿🇦","ZA","南非"],["🇳🇬","NG","尼日利亚"],["🇪🇬","EG","埃及"],["🇰🇪","KE","肯尼亚"],
-        ["🇬🇭","GH","加纳"],["🇪🇹","ET","埃塞俄比亚"],["🇹🇿","TZ","坦桑尼亚"],
-        ["🇺🇬","UG","乌干达"],["🇿🇲","ZM","赞比亚"],["🇿🇼","ZW","津巴布韦"],
-        ["🇲🇿","MZ","莫桑比克"],["🇲🇬","MG","马达加斯加"],["🇨🇮","CI","科特迪瓦"],
-        ["🇸🇳","SN","塞内加尔"],["🇨🇲","CM","喀麦隆"],["🇦🇴","AO","安哥拉"],
-        ["🇲🇦","MA","摩洛哥"],["🇩🇿","DZ","阿尔及利亚"],["🇹🇳","TN","突尼斯"],
-        ["🇱🇾","LY","利比亚"],["🇸🇩","SD","苏丹"],["🇷🇼","RW","卢旺达"],
-        ["🇩🇯","DJ","吉布提"],["🇸🇴","SO","索马里"],["🇪🇷","ER","厄立特里亚"],
-        ["🇲🇱","ML","马里"],["🇧🇫","BF","布基纳法索"],["🇳🇪","NE","尼日尔"],
-        ["🇨🇩","CD","刚果民主共和国"],["🇨🇬","CG","刚果共和国"],["🇬🇦","GA","加蓬"],
-        ["🇬🇶","GQ","赤道几内亚"],["🇸🇹","ST","圣多美和普林西比"],["🇨🇻","CV","佛得角"],
-        ["🇬🇼","GW","几内亚比绍"],["🇬🇳","GN","几内亚"],["🇸🇱","SL","塞拉利昂"],
-        ["🇱🇷","LR","利比里亚"],["🇹🇬","TG","多哥"],["🇧🇯","BJ","贝宁"],
-        ["🇬🇲","GM","冈比亚"],["🇲🇷","MR","毛里塔尼亚"],["🇲🇼","MW","马拉维"],
-        ["🇱🇸","LS","莱索托"],["🇸🇿","SZ","斯威士兰"],["🇧🇼","BW","博茨瓦纳"],
-        ["🇳🇦","NA","纳米比亚"],["🇨🇫","CF","中非共和国"],["🇹🇩","TD","乍得"],
-        ["🇧🇮","BI","布隆迪"],["🇰🇲","KM","科摩罗"],["🇸🇨","SC","塞舌尔"],
-        ["🇲🇺","MU","毛里求斯"],["🇫🇲","FM","密克罗尼西亚"],["🇵🇬","PG","巴布亚新几内亚"],
-        ["🇫🇯","FJ","斐济"],["🇸🇧","SB","所罗门群岛"],["🇻🇺","VU","瓦努阿图"],
-        ["🇼🇸","WS","萨摩亚"],["🇹🇴","TO","汤加"],["🇰🇮","KI","基里巴斯"],
-        ["🇳🇷","NR","瑙鲁"],["🇵🇼","PW","帕劳"],["🇲🇭","MH","马绍尔群岛"],
-        ["🇳🇿","NZ","新西兰"],["🇵🇫","PF","法属波利尼西亚"],["🇳🇨","NC","新喀里多尼亚"],
-        ["🇬🇺","GU","关岛"],["🇦🇶","AQ","南极洲"],["🇮🇸","IS","冰岛"],
-        ["🇮🇪","IE","爱尔兰"],["🇱🇺","LU","卢森堡"],["🇲🇹","MT","马耳他"],
-        ["🇨🇾","CY","塞浦路斯"],["🇪🇪","EE","爱沙尼亚"],["🇱🇻","LV","拉脱维亚"],
-        ["🇱🇹","LT","立陶宛"],["🇧🇾","BY","白俄罗斯"],["🇲🇩","MD","摩尔多瓦"],
-        ["🇷🇸","RS","塞尔维亚"],["🇭🇷","HR","克罗地亚"],["🇧🇦","BA","波黑"],
-        ["🇲🇰","MK","北马其顿"],["🇦🇱","AL","阿尔巴尼亚"],["🇲🇪","ME","黑山"],
-        ["🇸🇰","SK","斯洛伐克"],["🇸🇮","SI","斯洛文尼亚"],["🇧🇬","BG","保加利亚"],
-        ["🇱🇮","LI","列支敦士登"],["🇦🇩","AD","安道尔"],["🇲🇨","MC","摩纳哥"],
-        ["🇸🇲","SM","圣马力诺"],["🇻🇦","VA","梵蒂冈"],["🇯🇲","JM","牙买加"],
-        ["🇨🇺","CU","古巴"],["🇭🇹","HT","海地"],["🇩🇴","DO","多米尼加"],
-        ["🇵🇷","PR","波多黎各"],["🇹🇹","TT","特立尼达和多巴哥"],["🇧🇧","BB","巴巴多斯"],
-        ["🇱🇨","LC","圣卢西亚"],["🇻🇨","VC","圣文森特"],["🇬🇩","GD","格林纳达"],
-        ["🇦🇬","AG","安提瓜和巴布达"],["🇩🇲","DM","多米尼克"],["🇰🇳","KN","圣基茨"],
-        ["🇧🇿","BZ","伯利兹"],["🇬🇹","GT","危地马拉"],["🇭🇳","HN","洪都拉斯"],
-        ["🇸🇻","SV","萨尔瓦多"],["🇳🇮","NI","尼加拉瓜"],["🇨🇷","CR","哥斯达黎加"],
-        ["🇵🇦","PA","巴拿马"],["🇬🇾","GY","圭亚那"],["🇸🇷","SR","苏里南"],
-        ["🇲🇻","MV","马尔代夫"],["🇧🇹","BT","不丹"],["🇰🇵","KP","朝鲜"],
-        ["🇹🇻","TV","图瓦卢"],["🇨🇰","CK","库克群岛"],["🇳🇺","NU","纽埃"],
-        ["🇫🇰","FK","福克兰群岛"],["🇬🇮","GI","直布罗陀"],["🇧🇲","BM","百慕大"],
-        ["🇰🇾","KY","开曼群岛"],["🇻🇬","VG","英属维尔京群岛"],["🇦🇼","AW","阿鲁巴"],
-        ["🇨🇼","CW","库拉索"]
+            ["🇨🇳","CN","中国"],["🇺🇸","US","美国"],["🇯🇵","JP","日本"],["🇬🇧","GB","英国"],
+            ["🇩🇪","DE","德国"],["🇫🇷","FR","法国"],["🇷🇺","RU","俄罗斯"],["🇰🇷","KR","韩国"],
+            ["🇧🇷","BR","巴西"],["🇮🇳","IN","印度"],["🇨🇦","CA","加拿大"],["🇦🇺","AU","澳大利亚"],
+            ["🇸🇬","SG","新加坡"],["🇭🇰","HK","香港"],["🇹🇼","TW","台湾"],["🇲🇴","MO","澳门"],
+            ["🇳🇱","NL","荷兰"],["🇸🇪","SE","瑞典"],["🇳🇴","NO","挪威"],["🇩🇰","DK","丹麦"],
+            ["🇫🇮","FI","芬兰"],["🇨🇭","CH","瑞士"],["🇦🇹","AT","奥地利"],["🇧🇪","BE","比利时"],
+            ["🇵🇱","PL","波兰"],["🇨🇿","CZ","捷克"],["🇭🇺","HU","匈牙利"],["🇷🇴","RO","罗马尼亚"],
+            ["🇺🇦","UA","乌克兰"],["🇬🇷","GR","希腊"],["🇵🇹","PT","葡萄牙"],["🇪🇸","ES","西班牙"],
+            ["🇮🇹","IT","意大利"],["🇲🇽","MX","墨西哥"],["🇦🇷","AR","阿根廷"],["🇨🇱","CL","智利"],
+            ["🇨🇴","CO","哥伦比亚"],["🇵🇪","PE","秘鲁"],["🇻🇪","VE","委内瑞拉"],["🇺🇾","UY","乌拉圭"],
+            ["🇧🇴","BO","玻利维亚"],["🇵🇾","PY","巴拉圭"],["🇪🇨","EC","厄瓜多尔"],["🇹🇷","TR","土耳其"],
+            ["🇸🇦","SA","沙特阿拉伯"],["🇮🇱","IL","以色列"],["🇦🇪","AE","阿联酋"],["🇮🇷","IR","伊朗"],
+            ["🇮🇶","IQ","伊拉克"],["🇯🇴","JO","约旦"],["🇱🇧","LB","黎巴嫩"],["🇰🇼","KW","科威特"],
+            ["🇶🇦","QA","卡塔尔"],["🇴🇲","OM","阿曼"],["🇧🇭","BH","巴林"],["🇾🇪","YE","也门"],
+            ["🇸🇾","SY","叙利亚"],["🇦🇫","AF","阿富汗"],["🇵🇰","PK","巴基斯坦"],["🇧🇩","BD","孟加拉国"],
+            ["🇱🇰","LK","斯里兰卡"],["🇳🇵","NP","尼泊尔"],["🇲🇲","MM","缅甸"],["🇹🇭","TH","泰国"],
+            ["🇻🇳","VN","越南"],["🇵🇭","PH","菲律宾"],["🇮🇩","ID","印度尼西亚"],["🇲🇾","MY","马来西亚"],
+            ["🇰🇭","KH","柬埔寨"],["🇱🇦","LA","老挝"],["🇧🇳","BN","文莱"],["🇹🇱","TL","东帝汶"],
+            ["🇲🇳","MN","蒙古"],["🇰🇿","KZ","哈萨克斯坦"],["🇺🇿","UZ","乌兹别克斯坦"],
+            ["🇹🇲","TM","土库曼斯坦"],["🇰🇬","KG","吉尔吉斯斯坦"],["🇹🇯","TJ","塔吉克斯坦"],
+            ["🇦🇿","AZ","阿塞拜疆"],["🇬🇪","GE","格鲁吉亚"],["🇦🇲","AM","亚美尼亚"],
+            ["🇿🇦","ZA","南非"],["🇳🇬","NG","尼日利亚"],["🇪🇬","EG","埃及"],["🇰🇪","KE","肯尼亚"],
+            ["🇬🇭","GH","加纳"],["🇪🇹","ET","埃塞俄比亚"],["🇹🇿","TZ","坦桑尼亚"],
+            ["🇺🇬","UG","乌干达"],["🇿🇲","ZM","赞比亚"],["🇿🇼","ZW","津巴布韦"],
+            ["🇲🇿","MZ","莫桑比克"],["🇲🇬","MG","马达加斯加"],["🇨🇮","CI","科特迪瓦"],
+            ["🇸🇳","SN","塞内加尔"],["🇨🇲","CM","喀麦隆"],["🇦🇴","AO","安哥拉"],
+            ["🇲🇦","MA","摩洛哥"],["🇩🇿","DZ","阿尔及利亚"],["🇹🇳","TN","突尼斯"],
+            ["🇱🇾","LY","利比亚"],["🇸🇩","SD","苏丹"],["🇷🇼","RW","卢旺达"],
+            ["🇩🇯","DJ","吉布提"],["🇸🇴","SO","索马里"],["🇪🇷","ER","厄立特里亚"],
+            ["🇲🇱","ML","马里"],["🇧🇫","BF","布基纳法索"],["🇳🇪","NE","尼日尔"],
+            ["🇨🇩","CD","刚果民主共和国"],["🇨🇬","CG","刚果共和国"],["🇬🇦","GA","加蓬"],
+            ["🇬🇶","GQ","赤道几内亚"],["🇸🇹","ST","圣多美和普林西比"],["🇨🇻","CV","佛得角"],
+            ["🇬🇼","GW","几内亚比绍"],["🇬🇳","GN","几内亚"],["🇸🇱","SL","塞拉利昂"],
+            ["🇱🇷","LR","利比里亚"],["🇹🇬","TG","多哥"],["🇧🇯","BJ","贝宁"],
+            ["🇬🇲","GM","冈比亚"],["🇲🇷","MR","毛里塔尼亚"],["🇲🇼","MW","马拉维"],
+            ["🇱🇸","LS","莱索托"],["🇸🇿","SZ","斯威士兰"],["🇧🇼","BW","博茨瓦纳"],
+            ["🇳🇦","NA","纳米比亚"],["🇨🇫","CF","中非共和国"],["🇹🇩","TD","乍得"],
+            ["🇧🇮","BI","布隆迪"],["🇰🇲","KM","科摩罗"],["🇸🇨","SC","塞舌尔"],
+            ["🇲🇺","MU","毛里求斯"],["🇫🇲","FM","密克罗尼西亚"],["🇵🇬","PG","巴布亚新几内亚"],
+            ["🇫🇯","FJ","斐济"],["🇸🇧","SB","所罗门群岛"],["🇻🇺","VU","瓦努阿图"],
+            ["🇼🇸","WS","萨摩亚"],["🇹🇴","TO","汤加"],["🇰🇮","KI","基里巴斯"],
+            ["🇳🇷","NR","瑙鲁"],["🇵🇼","PW","帕劳"],["🇲🇭","MH","马绍尔群岛"],
+            ["🇳🇿","NZ","新西兰"],["🇵🇫","PF","法属波利尼西亚"],["🇳🇨","NC","新喀里多尼亚"],
+            ["🇬🇺","GU","关岛"],["🇦🇶","AQ","南极洲"],["🇮🇸","IS","冰岛"],
+            ["🇮🇪","IE","爱尔兰"],["🇱🇺","LU","卢森堡"],["🇲🇹","MT","马耳他"],
+            ["🇨🇾","CY","塞浦路斯"],["🇪🇪","EE","爱沙尼亚"],["🇱🇻","LV","拉脱维亚"],
+            ["🇱🇹","LT","立陶宛"],["🇧🇾","BY","白俄罗斯"],["🇲🇩","MD","摩尔多瓦"],
+            ["🇷🇸","RS","塞尔维亚"],["🇭🇷","HR","克罗地亚"],["🇧🇦","BA","波黑"],
+            ["🇲🇰","MK","北马其顿"],["🇦🇱","AL","阿尔巴尼亚"],["🇲🇪","ME","黑山"],
+            ["🇸🇰","SK","斯洛伐克"],["🇸🇮","SI","斯洛文尼亚"],["🇧🇬","BG","保加利亚"],
+            ["🇱🇮","LI","列支敦士登"],["🇦🇩","AD","安道尔"],["🇲🇨","MC","摩纳哥"],
+            ["🇸🇲","SM","圣马力诺"],["🇻🇦","VA","梵蒂冈"],["🇯🇲","JM","牙买加"],
+            ["🇨🇺","CU","古巴"],["🇭🇹","HT","海地"],["🇩🇴","DO","多米尼加"],
+            ["🇵🇷","PR","波多黎各"],["🇹🇹","TT","特立尼达和多巴哥"],["🇧🇧","BB","巴巴多斯"],
+            ["🇱🇨","LC","圣卢西亚"],["🇻🇨","VC","圣文森特"],["🇬🇩","GD","格林纳达"],
+            ["🇦🇬","AG","安提瓜和巴布达"],["🇩🇲","DM","多米尼克"],["🇰🇳","KN","圣基茨"],
+            ["🇧🇿","BZ","伯利兹"],["🇬🇹","GT","危地马拉"],["🇭🇳","HN","洪都拉斯"],
+            ["🇸🇻","SV","萨尔瓦多"],["🇳🇮","NI","尼加拉瓜"],["🇨🇷","CR","哥斯达黎加"],
+            ["🇵🇦","PA","巴拿马"],["🇬🇾","GY","圭亚那"],["🇸🇷","SR","苏里南"],
+            ["🇲🇻","MV","马尔代夫"],["🇧🇹","BT","不丹"],["🇰🇵","KP","朝鲜"],
+            ["🇹🇻","TV","图瓦卢"],["🇨🇰","CK","库克群岛"],["🇳🇺","NU","纽埃"],
+            ["🇫🇰","FK","福克兰群岛"],["🇬🇮","GI","直布罗陀"],["🇧🇲","BM","百慕大"],
+            ["🇰🇾","KY","开曼群岛"],["🇻🇬","VG","英属维尔京群岛"],["🇦🇼","AW","阿鲁巴"],
+            ["🇨🇼","CW","库拉索"]
         ];
 
-    let probes = []; // 探针数组: { id, uuid, country: [flag, code, name] }
-    let useTls = true;
-
-    // UUID 生成算法
-    function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0;
-            const v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-
-    // 设置 TLS
-    window.setTls = function(val) {
-        useTls = val;
-        document.getElementById('tls-true').classList.toggle('active', val);
-        document.getElementById('tls-false').classList.toggle('active', !val);
-    };
-
-    // 打开国家模态框
-    window.openCountryModal = function() {
-        if (probes.length >= 30) {
-            alert('单次最多只能添加 30 个探针！');
-            return;
+        const isWindows = /windows/i.test(navigator.userAgent);
+        function flagHtml(emoji, code) {
+            if (isWindows) {
+                return `<img src="https://fastly.jsdelivr.net/gh/lipis/flag-icons@7.0.0/flags/4x3/${code.toLowerCase()}.svg" width="24" height="18" style="vertical-align:middle;border-radius:2px;" alt="${code}">`;
+            }
+            return emoji;
         }
-        document.getElementById('modalSearch').value = '';
-        renderModalCountries(COUNTRIES);
-        document.getElementById('countryModalOverlay').classList.add('open');
-        setTimeout(() => document.getElementById('modalSearch').focus(), 100);
-    };
 
-    // 关闭模态框
-    window.closeCountryModal = function() {
-        document.getElementById('countryModalOverlay').classList.remove('open');
-    };
+        let probes = [];
+        let useTls = true;
 
-    window.closeCountryModalOutside = function(e) {
-        if (e.target.id === 'countryModalOverlay') {
-            closeCountryModal();
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+                const r = Math.random() * 16 | 0;
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
         }
-    };
 
-    // 渲染模态框国家
-    function renderModalCountries(list) {
-        const grid = document.getElementById('modalCountryGrid');
-        const noRes = document.getElementById('modalNoResults');
-        grid.innerHTML = '';
-        
-        if (list.length === 0) {
-            noRes.style.display = 'block';
-            return;
+        function safeEncode(str) {
+            return encodeURIComponent(str).replace(/%3A/g, ':');
         }
-        noRes.style.display = 'none';
 
-        list.forEach(c => {
-            const btn = document.createElement('button');
-            btn.className = 'c-btn-modal';
-            btn.onclick = () => selectCountryAndAdd(c);
-            btn.innerHTML = `
-                <span class="flag-modal">${c[0]}</span>
-                <span class="info-modal">
-                    <span class="name-modal">${c[2]}</span>
-                    <span class="code-modal">${c[1]}</span>
-                </span>
-            `;
-            grid.appendChild(btn);
-        });
-    }
-
-    // 搜索过滤国家
-    window.filterModalCountries = function() {
-        const q = document.getElementById('modalSearch').value.trim().toLowerCase();
-        if (!q) {
-            renderModalCountries(COUNTRIES);
-            return;
-        }
-        const filtered = COUNTRIES.filter(c => 
-            c[1].toLowerCase().includes(q) || c[2].toLowerCase().includes(q)
-        );
-        renderModalCountries(filtered);
-    };
-
-    // 点击国家：生成 UUID 并直接添加探针
-    function selectCountryAndAdd(country) {
-        if (probes.length >= 30) {
-            alert('单次最多只能添加 30 个探针！');
-            closeCountryModal();
-            return;
-        }
-        const newProbe = {
-            id: Date.now() + Math.random().toString(36).substr(2, 5),
-            uuid: generateUUID(),
-            country: country
+        window.setTls = function(v) {
+            useTls = v;
+            document.getElementById('tls-true').classList.toggle('active', v);
+            document.getElementById('tls-false').classList.toggle('active', !v);
         };
-        probes.push(newProbe);
-        renderProbes();
-        closeCountryModal();
-    }
 
-    // 删除单个探针
-    window.deleteProbe = function(id) {
-        probes = probes.filter(p => p.id !== id);
-        renderProbes();
-    };
+        window.openCountryModal = function() {
+            if (probes.length >= 30) { alert('最多30个探针'); return; }
+            document.getElementById('modalSearch').value = '';
+            renderModalCountries(COUNTRIES);
+            document.getElementById('countryModalOverlay').classList.add('open');
+            setTimeout(() => document.getElementById('modalSearch').focus(), 100);
+        };
+        window.closeCountryModal = () => document.getElementById('countryModalOverlay').classList.remove('open');
+        window.closeCountryModalOutside = (e) => { if(e.target.id==='countryModalOverlay') closeCountryModal(); };
 
-    // 渲染已添加探针列表
-    function renderProbes() {
-        const listContainer = document.getElementById('uuidList');
-        const emptyHint = document.getElementById('emptyHint');
-        const countBadge = document.getElementById('countBadge');
-
-        countBadge.innerHTML = `已添加 <strong>${probes.length}</strong> / 30 个探针`;
-
-        if (probes.length === 0) {
-            listContainer.innerHTML = '';
-            emptyHint.style.display = 'block';
-            return;
+        function renderModalCountries(list) {
+            const grid = document.getElementById('modalCountryGrid');
+            const noRes = document.getElementById('modalNoResults');
+            grid.innerHTML = '';
+            if (!list.length) { noRes.style.display = 'block'; return; }
+            noRes.style.display = 'none';
+            list.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = 'c-btn-modal';
+                btn.onclick = () => selectCountryAndAdd(c);
+                btn.innerHTML = `<span class="flag-modal">${flagHtml(c[0], c[1])}</span><span class="info-modal"><span class="name-modal">${c[2]}</span><span class="code-modal">${c[1]}</span></span>`;
+                grid.appendChild(btn);
+            });
         }
 
-        emptyHint.style.display = 'none';
-        listContainer.innerHTML = '';
+        window.filterModalCountries = function() {
+            const q = document.getElementById('modalSearch').value.trim().toLowerCase();
+            renderModalCountries(q ? COUNTRIES.filter(c => c[1].toLowerCase().includes(q) || c[2].toLowerCase().includes(q)) : COUNTRIES);
+        };
 
-        probes.forEach((p) => {
-            const row = document.createElement('div');
-            row.className = 'uuid-row';
-            row.innerHTML = `
-                <span class="flag-big">${p.country[0]}</span>
-                <span class="country-name-tag">${p.country[2]}</span>
-                <input type="text" class="uuid-input" value="${p.uuid}" onchange="updateUuid('${p.id}', this.value)" title="点击可编辑 UUID">
-                <span class="cc-badge">${p.country[1]}</span>
-                <button class="del-btn" onclick="deleteProbe('${p.id}')" title="删除探针">✕</button>
-            `;
-            listContainer.appendChild(row);
-        });
-    }
-
-    // 修改 UUID
-    window.updateUuid = function(id, val) {
-        const p = probes.find(item => item.id === id);
-        if (p) p.uuid = val.trim();
-    };
-
-    // 问题1修复：清空全部探针功能
-    window.clearAll = function() {
-        if (probes.length === 0) return;
-        if (confirm('确定要清空所有已添加的探针吗？')) {
-            probes = [];
+        function selectCountryAndAdd(country) {
+            if (probes.length >= 30) { alert('最多30个探针'); closeCountryModal(); return; }
+            probes.push({ id: Date.now() + Math.random().toString(36).substr(2,5), uuid: generateUUID(), country });
             renderProbes();
-            clearOutputs();
-        }
-    };
-
-    // 问题1修复：完全重置功能
-    window.resetAll = function() {
-        if (confirm('确定要重置所有配置和已添加的探针吗？')) {
-            document.getElementById('server').value = '';
-            document.getElementById('secret').value = '';
-            setTls(true);
-            probes = [];
-            renderProbes();
-            clearOutputs();
-        }
-    };
-
-    function clearOutputs() {
-        document.getElementById('out-url').innerText = '← 填写配置后点击「生成」按钮';
-        document.getElementById('out-url').className = 'placeholder-output';
-        document.getElementById('out-cron').innerText = '← 填写配置后点击「生成」按钮';
-        document.getElementById('out-cron').className = 'placeholder-output';
-    }
-
-    // 切换 Tab
-    window.switchTab = function(tab) {
-        document.getElementById('tabUrlBtn').classList.toggle('active', tab === 'url');
-        document.getElementById('tabCronBtn').classList.toggle('active', tab === 'cron');
-        document.getElementById('tab-url').style.display = tab === 'url' ? 'block' : 'none';
-        document.getElementById('tab-cron').style.display = tab === 'cron' ? 'block' : 'none';
-    };
-
-    // 生成命令
-    window.generate = function() {
-        const server = document.getElementById('server').value.trim();
-        const secret = document.getElementById('secret').value.trim();
-
-        if (!server) {
-            alert('请填写面板地址！');
-            return;
-        }
-        if (!secret) {
-            alert('请填写通信密钥 Secret！');
-            return;
-        }
-        if (probes.length === 0) {
-            alert('请至少选择国家添加一个探针！');
-            return;
+            closeCountryModal();
         }
 
-        const probeParams = probes.map(p => `${p.uuid}:${p.country[1]}`).join(',');
-        const baseUrl = `https://keep.nett.to/report?server=${encodeURIComponent(server)}&secret=${encodeURIComponent(secret)}&tls=${useTls}&probes=${probeParams}`;
-        
-        const outUrl = document.getElementById('out-url');
-        outUrl.innerText = baseUrl;
-        outUrl.className = '';
+        window.deleteProbe = function(id) { probes = probes.filter(p => p.id !== id); renderProbes(); };
 
-        const cronCmd = `curl -s "${baseUrl}" >/dev/null 2>&1`;
-        const outCron = document.getElementById('out-cron');
-        outCron.innerText = cronCmd;
-        outCron.className = '';
-    };
+        function renderProbes() {
+            const list = document.getElementById('uuidList');
+            const emptyHint = document.getElementById('emptyHint');
+            const badge = document.getElementById('countBadge');
+            badge.innerHTML = `已添加 <strong>${probes.length}</strong> / 30 个探针`;
+            if (!probes.length) { list.innerHTML = ''; emptyHint.style.display = 'block'; return; }
+            emptyHint.style.display = 'none';
+            list.innerHTML = probes.map(p => `
+                <div class="uuid-row">
+                    <span class="flag-big">${flagHtml(p.country[0], p.country[1])}</span>
+                    <span class="country-name-tag">${p.country[2]}</span>
+                    <input class="uuid-input" value="${p.uuid}" onchange="updateUuid('${p.id}', this.value)">
+                    <span class="cc-badge">${p.country[1]}</span>
+                    <button class="del-btn" onclick="deleteProbe('${p.id}')">✕</button>
+                </div>`).join('');
+        }
 
-    // 复制输出文本
-    window.copyOut = function(targetId, btn) {
-        const target = document.getElementById(targetId);
-        if (target.classList.contains('placeholder-output')) return;
+        window.updateUuid = function(id, val) {
+            const p = probes.find(item => item.id === id);
+            if (p) p.uuid = val.trim();
+        };
 
-        const text = target.innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            const originalText = btn.innerText;
-            btn.innerText = '已复制';
-            btn.classList.add('copied');
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.classList.remove('copied');
-            }, 2000);
-        }).catch(() => {
-            alert('复制失败，请手动选中文本复制');
-        });
-    };
+        window.clearAll = function() {
+            if (!probes.length) return;
+            if (confirm('清空所有探针？')) { probes = []; renderProbes(); clearOutputs(); }
+        };
 
-    // GitHub 角标展开联动
-    const hotzone = document.getElementById('githubHotzone');
-    const corner = document.getElementById('githubCorner');
+        window.resetAll = function() {
+            if (confirm('重置所有内容？')) {
+                document.getElementById('server').value = '';
+                document.getElementById('secret').value = '';
+                setTls(true);
+                probes = [];
+                renderProbes();
+                clearOutputs();
+            }
+        };
 
-    if (hotzone && corner) {
+        function clearOutputs() {
+            ['out-url','out-cron'].forEach(id => {
+                const el = document.getElementById(id);
+                el.textContent = '← 填写配置后点击「生成」按钮';
+                el.className = 'placeholder-output';
+            });
+        }
+
+        window.switchTab = function(t) {
+            document.getElementById('tab-url').style.display = t==='url' ? '' : 'none';
+            document.getElementById('tab-cron').style.display = t==='cron' ? '' : 'none';
+            document.getElementById('tabUrlBtn').classList.toggle('active', t==='url');
+            document.getElementById('tabCronBtn').classList.toggle('active', t==='cron');
+        };
+
+        window.generate = function() {
+            const server = document.getElementById('server').value.trim();
+            const secret = document.getElementById('secret').value.trim();
+            if (!server) { alert('填写面板地址'); return; }
+            if (!secret) { alert('填写通信密钥'); return; }
+            if (!probes.length) { alert('请先添加探针'); return; }
+            const uuidParam = probes.map(p => `${p.uuid}:${p.country[1]}`).join(',');
+            const apiUrl = `https://keep.nett.to/report?server=${safeEncode(server)}&secret=${safeEncode(secret)}&tls=${useTls}&uuid=${safeEncode(uuidParam)}`;
+            const outUrl = document.getElementById('out-url');
+            outUrl.textContent = apiUrl;
+            outUrl.classList.remove('placeholder-output');
+            const cronCmd = `urls=(\n  "${apiUrl}"\n)\n\nfor url in "\${urls[@]}"; do\n  curl -s \\\n    -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36" \\\n    "$url" &\ndone\nwait`;
+            const outCron = document.getElementById('out-cron');
+            outCron.textContent = cronCmd;
+            outCron.classList.remove('placeholder-output');
+        };
+
+        window.copyOut = function(id, btn) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('placeholder-output')) return;
+            const text = el.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '✅ 已复制';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+            }).catch(() => alert('复制失败，请手动复制'));
+        };
+
+        const hotzone = document.getElementById('githubHotzone');
+        const corner = document.getElementById('githubCorner');
         hotzone.addEventListener('mouseenter', () => corner.classList.add('expanded'));
         hotzone.addEventListener('mouseleave', () => corner.classList.remove('expanded'));
-        hotzone.addEventListener('click', () => {
-            window.open('https://github.com/oyz8/Disguised-probe', '_blank');
-        });
-    }
+        hotzone.addEventListener('click', () => window.open('https://github.com/oyz8/Disguised-probe', '_blank'));
 
-    // 初始化运行
-    renderProbes();
-})();
-    </script>
+        renderProbes();
+    })();
+</script>
 </body>
-
 </html>
