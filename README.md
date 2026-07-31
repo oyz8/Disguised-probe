@@ -3,7 +3,9 @@
 
 > **📌 快速指引**
 > - **在线生成 UUID**：访问 [uuidgenerator.net](https://www.uuidgenerator.net/) 生成 **Version 4** 即可，每个探针需唯一 UUID。
+> - **一键拼接请求**：使用 [命令生成器](https://www.keep.nett.to/) 填入参数直接生成上报 URL。 小白福利
 > - **国家代码哪里查**：使用[Nations Online](https://www.nationsonline.org/oneworld/country_code_list.htm)。
+
 
 ---
 
