@@ -1,4 +1,5 @@
 # 一口气点亮全球 200 个国家的探针
+# ⭐ **觉得有用？给个 Star 支持一下！**
 
 > **📌 快速指引**
 > - **在线生成 UUID**：访问 [uuidgenerator.net](https://www.uuidgenerator.net/) 生成 **Version 4** 即可，每个探针需唯一 UUID。
