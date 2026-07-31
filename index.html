@@ -70,44 +70,28 @@
             justify-content: center;
             gap: 8px;
         }
-        .logo-img {
-            width: 38px; height: 38px;
-            border-radius: 11px;
-            vertical-align: middle;
-        }
+        .logo-img { width: 38px; height: 38px; border-radius: 11px; vertical-align: middle; }
         header h1 span.accent {
             background: linear-gradient(135deg, #0071e3, #5ac8fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        header p {
-            color: var(--text-secondary);
-            margin-top: 6px;
-            font-size: 0.95rem;
-        }
-        /* GitHub 三角形角标 */
-        .github-corner-wrapper {
-            position: fixed; top: 0; right: 0; width: 80px; height: 80px; z-index: 9999; pointer-events: none;
-        }
+        header p { color: var(--text-secondary); margin-top: 6px; font-size: 0.95rem; }
+
+        .github-corner-wrapper { position: fixed; top: 0; right: 0; width: 80px; height: 80px; z-index: 9999; pointer-events: none; }
         .github-corner {
             position: absolute; top: 0; right: 0; width: 0; height: 0;
-            border-style: solid;
-            border-width: 0 80px 80px 0;
+            border-style: solid; border-width: 0 80px 80px 0;
             border-color: transparent #1d1d1f transparent transparent;
-            transform: scale(0);
-            transform-origin: top right;
+            transform: scale(0); transform-origin: top right;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer; pointer-events: auto;
         }
         .github-corner.expanded { transform: scale(1); }
-        .github-corner svg {
-            position: absolute; top: 5px; right: -70px; width: 36px; height: 36px;
-            fill: #ffffff; pointer-events: none; transition: opacity 0.2s;
-        }
-        .github-hotzone {
-            position: fixed; top: 0; right: 0; width: 80px; height: 80px; cursor: pointer; z-index: 10000;
-        }
+        .github-corner svg { position: absolute; top: 5px; right: -70px; width: 36px; height: 36px; fill: #ffffff; }
+        .github-hotzone { position: fixed; top: 0; right: 0; width: 80px; height: 80px; cursor: pointer; z-index: 10000; }
+
         @media(max-width:640px) {
             .github-corner-wrapper { width: 65px; height: 65px; }
             .github-corner { border-width: 0 65px 65px 0; }
@@ -119,48 +103,37 @@
             background: var(--card-bg); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 26px 28px; margin-bottom: 18px;
             box-shadow: var(--shadow-sm); transition: box-shadow var(--transition);
-            animation: fadeInUp 0.4s ease forwards;
         }
         .card:hover { box-shadow: var(--shadow-md); }
-        .card-header {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
-            padding-bottom: 14px; border-bottom: 1px solid var(--border);
-        }
-        .step-num {
-            width: 30px; height: 30px; border-radius: 50%; background: var(--accent);
-            color: #fff; font-size: 0.82rem; font-weight: 700;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-        }
+        .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+        .step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
         .card-title { font-size: 1.05rem; font-weight: 650; }
         .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         @media(max-width:600px){ .grid2{ grid-template-columns:1fr; } }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; color: var(--text); }
-        label .label-sub { font-weight: 400; color: var(--text-tertiary); font-size: 0.75rem; margin-left: 4px; }
-        input[type=text], select {
+        .label-sub { font-weight: 400; color: var(--text-tertiary); font-size: 0.75rem; margin-left: 4px; }
+        input[type=text] {
             width: 100%; background: #f9f9fb; border: 1.5px solid var(--border);
             border-radius: var(--radius-sm); padding: 11px 14px; color: var(--text);
             font-size: 0.9rem; font-family: var(--font-stack); outline: none;
             transition: all var(--transition-fast);
         }
-        input:focus, select:focus {
-            border-color: var(--border-focus); background: #fff;
-            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.08);
-        }
+        input:focus { border-color: var(--border-focus); background: #fff; box-shadow: 0 0 0 4px rgba(0,113,227,0.08); }
         .hint { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px; }
         .segmented-control { display: inline-flex; background: #f1f1f5; border-radius: 10px; padding: 3px; gap: 2px; }
         .seg-btn {
             padding: 8px 18px; border-radius: 8px; border: none; background: transparent;
             color: var(--text-secondary); cursor: pointer; font-size: 0.84rem; font-weight: 500;
-            font-family: var(--font-stack); transition: all var(--transition-fast); white-space: nowrap;
+            transition: all var(--transition-fast); white-space: nowrap;
         }
         .seg-btn.active { background: #fff; color: var(--text); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-        .country-trigger-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+        .country-trigger-wrap { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
         .country-trigger {
             display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px;
             border-radius: var(--radius); border: 2px dashed var(--border); background: #fafafc;
             cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--text);
-            font-family: var(--font-stack); transition: all var(--transition-fast); width: 100%; justify-content: center;
+            width: 100%; justify-content: center; transition: all var(--transition-fast);
         }
         .country-trigger:hover { border-color: var(--accent); background: var(--accent-subtle); }
         .modal-overlay {
@@ -175,8 +148,7 @@
             transform: translateY(20px) scale(0.97); transition: transform 0.3s ease; overflow: hidden;
         }
         .modal-overlay.open .modal-dialog { transform: translateY(0) scale(1); }
-        .modal-header { padding: 20px 22px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-        .modal-header h3 { font-size: 1.1rem; font-weight: 650; }
+        .modal-header { padding: 20px 22px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
         .modal-close { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f1f1f5; cursor: pointer; }
         .modal-search { padding: 12px 22px; }
         .modal-search input { width: 100%; padding: 11px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: #f9f9fb; }
@@ -246,11 +218,7 @@
         .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .guide-item { background: #fafafc; border-radius: var(--radius-sm); padding: 14px 16px; border:1px solid var(--border); }
         .divider { height:1px; background:var(--border); margin:18px 0; }
-        .footer-signature {
-            text-align: center; padding: 24px 16px 32px; font-size: 0.8rem;
-            color: var(--text-tertiary); display: flex; justify-content: center; gap: 6px;
-        }
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+        .footer-signature { text-align: center; padding: 24px 16px 32px; font-size: 0.8rem; color: var(--text-tertiary); display: flex; justify-content: center; gap: 6px; }
     </style>
 </head>
 <body>
@@ -276,7 +244,12 @@
             <div class="form-group"><label>面板地址<span class="label-sub">（含端口）</span></label><input type="text" id="server" placeholder="nezha.example.com:443"><div class="hint">无需 http:// 前缀</div></div>
             <div class="form-group"><label>通信密钥 Secret</label><input type="text" id="secret" placeholder="your-secret-key"></div>
         </div>
-        <div class="form-group"><label>是否启用 TLS</label><div class="segmented-control"><button class="seg-btn active" onclick="setTls(true)">🔒 开启</button><button class="seg-btn" onclick="setTls(false)">🔓 关闭</button></div></div>
+        <div class="form-group"><label>是否启用 TLS</label>
+            <div class="segmented-control">
+                <button class="seg-btn active" id="tls-true" onclick="setTls(true)">🔒 开启</button>
+                <button class="seg-btn" id="tls-false" onclick="setTls(false)">🔓 关闭</button>
+            </div>
+        </div>
     </div>
 
     <div class="card">
@@ -316,10 +289,10 @@
     <div class="card">
         <div class="card-header"><span class="step-num" style="background:#6e6e73">📖</span><span class="card-title">快速说明</span></div>
         <div class="guide-grid">
-            <div class="guide-item"><strong>计划任务 Cron</strong><code> */30 * * * * *</code> 每30秒自动保活</div>
-            <div class="guide-item"><strong>单次最多探针</strong><code> 30 个</code> 超出请新建任务分拆</div>
-            <div class="guide-item"><strong>执行服务器</strong> 选择可访问外网的稳定服务器</div>
-            <div class="guide-item"><strong>API 端点</strong><code> https://keep.nett.to/report</code></div>
+            <div class="guide-item"><strong>计划任务 Cron</strong><code>*/30 * * * * *</code> 每30秒自动保活</div>
+            <div class="guide-item"><strong>单次最多探针</strong><code>30 个</code> 超出请新建任务分拆</div>
+            <div class="guide-item"><strong>执行服务器</strong>选择可访问外网的稳定服务器</div>
+            <div class="guide-item"><strong>API 端点</strong><code>keep.nett.to/report</code></div>
         </div>
     </div>
 </div>
