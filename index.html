@@ -150,8 +150,21 @@
         .modal-overlay.open .modal-dialog { transform: translateY(0) scale(1); }
         .modal-header { padding: 20px 22px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
         .modal-close { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f1f1f5; cursor: pointer; }
-        .modal-search { padding: 12px 22px; }
-        .modal-search input { width: 100%; padding: 11px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: #f9f9fb; }
+        .modal-search { padding: 12px 22px; display: flex; gap: 8px; align-items: center; }
+        .modal-search input { flex: 1; padding: 11px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: #f9f9fb; }
+        .btn-select-all {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.84rem;
+            white-space: nowrap;
+            color: var(--text);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+        .btn-select-all:hover { background: #f0f0f5; border-color: #d5d5da; }
         .modal-body { padding: 8px 16px 18px; overflow-y: auto; flex: 1; }
         .country-grid-modal { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
         .c-btn-modal {
@@ -172,7 +185,6 @@
         .name-modal { font-weight: 500; font-size: 0.8rem; }
         .code-modal { font-size: 0.7rem; color: var(--text-tertiary); }
         
-        /* 多选底部操作栏 */
         .modal-footer {
             padding: 12px 22px 18px;
             border-top: 1px solid var(--border);
@@ -181,10 +193,7 @@
             justify-content: space-between;
             background: #fff;
         }
-        .modal-footer .selection-info {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
+        .modal-footer .selection-info { font-size: 0.85rem; color: var(--text-secondary); }
         .modal-footer .btn-add-selected {
             padding: 10px 22px;
             background: var(--accent);
@@ -196,13 +205,8 @@
             cursor: pointer;
             transition: background var(--transition-fast);
         }
-        .modal-footer .btn-add-selected:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        .modal-footer .btn-add-selected:not(:disabled):hover {
-            background: var(--accent-hover);
-        }
+        .modal-footer .btn-add-selected:disabled { background: #ccc; cursor: not-allowed; }
+        .modal-footer .btn-add-selected:not(:disabled):hover { background: var(--accent-hover); }
 
         .probe-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .probe-count { font-size: 0.85rem; color: var(--text-secondary); }
@@ -375,7 +379,7 @@
         <div class="uuid-list" id="uuidList"></div>
         <div class="empty-hint" id="emptyHint">📭 暂无探针，点击下方按钮添加国家</div>
         <div class="probe-summary">
-            <span class="probe-count" id="countBadge">已添加 <strong>0</strong> / 30 个探针</span>
+            <span class="probe-count" id="countBadge">已添加 <strong>0</strong> 个探针</span>
             <button class="btn-clear" onclick="clearAll()">🗑 清空全部</button>
         </div>
         <div class="divider"></div>
@@ -408,7 +412,7 @@
         <div class="card-header"><span class="step-num" style="background:#6e6e73">📖</span><span class="card-title">快速说明</span></div>
         <div class="guide-grid">
             <div class="guide-item"><strong>计划任务 Cron</strong><code> */30 * * * * *</code> 每30秒自动保活</div>
-            <div class="guide-item"><strong>单次最多探针</strong><code> 30 个</code> 超出请新建任务分拆</div>
+            <div class="guide-item"><strong>单组最多探针</strong><code> 10 个</code> 超出自动拆分为多行</div>
             <div class="guide-item"><strong>执行服务器</strong> 选择可访问外网的稳定服务器</div>
             <div class="guide-item"><strong>API 端点</strong><code> https://keep.nett.to/report</code></div>
         </div>
@@ -434,7 +438,10 @@
 <div class="modal-overlay" id="countryModalOverlay" onclick="closeCountryModalOutside(event)">
     <div class="modal-dialog" onclick="event.stopPropagation()">
         <div class="modal-header"><h3>🌍 选择国家（可多选）</h3><button class="modal-close" onclick="closeCountryModal()">✕</button></div>
-        <div class="modal-search"><input type="text" id="modalSearch" placeholder="搜索国家名称或代码" oninput="filterModalCountries()"></div>
+        <div class="modal-search">
+            <input type="text" id="modalSearch" placeholder="搜索国家名称或代码" oninput="filterModalCountries()">
+            <button class="btn-select-all" id="btnSelectAll" onclick="toggleSelectAll()">全选</button>
+        </div>
         <div class="modal-body">
             <div class="country-grid-modal" id="modalCountryGrid"></div>
             <div id="modalNoResults" style="display:none;text-align:center;padding:30px;color:var(--text-tertiary);">未找到匹配的国家</div>
@@ -526,6 +533,7 @@
         let probes = [];
         let useTls = true;
         let selectedCountries = [];
+        window.currentFilteredList = COUNTRIES;
 
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -534,7 +542,7 @@
             });
         }
 
-        function safeEncode(str) {
+        function safeEncodeServerOrSecret(str) {
             return encodeURIComponent(str).replace(/%3A/g, ':');
         }
 
@@ -545,7 +553,6 @@
         };
 
         window.openCountryModal = function() {
-            if (probes.length >= 30) { alert('最多30个探针'); return; }
             document.getElementById('modalSearch').value = '';
             selectedCountries = [];
             updateSelectionUI();
@@ -567,6 +574,24 @@
             renderModalCountries(window.currentFilteredList || COUNTRIES);
         }
 
+        window.toggleSelectAll = function() {
+            const list = window.currentFilteredList || COUNTRIES;
+            if (list.length === 0) return;
+            const allSelected = list.every(c => selectedCountries.some(sc => sc[1] === c[1]));
+            if (allSelected) {
+                const codesToRemove = new Set(list.map(c => c[1]));
+                selectedCountries = selectedCountries.filter(sc => !codesToRemove.has(sc[1]));
+            } else {
+                list.forEach(c => {
+                    if (!selectedCountries.some(sc => sc[1] === c[1])) {
+                        selectedCountries.push(c);
+                    }
+                });
+            }
+            updateSelectionUI();
+            renderModalCountries(list);
+        };
+
         function updateSelectionUI() {
             document.getElementById('selectionInfo').textContent = `已选 ${selectedCountries.length} 个国家`;
             const btn = document.getElementById('btnAddSelected');
@@ -575,26 +600,41 @@
 
         window.addSelectedCountries = function() {
             if (selectedCountries.length === 0) return;
-            const availableSlots = 30 - probes.length;
-            if (availableSlots <= 0) {
-                alert('已达到30个探针上限');
-                return;
-            }
-            const toAdd = selectedCountries.slice(0, availableSlots);
-            toAdd.forEach(country => {
+            selectedCountries.forEach(country => {
                 probes.push({
                     id: Date.now() + Math.random().toString(36).substr(2,5),
                     uuid: generateUUID(),
                     country: country
                 });
             });
-            if (toAdd.length < selectedCountries.length) {
-                alert(`仅添加了 ${toAdd.length} 个探针，已达上限30个`);
-            }
             selectedCountries = [];
             renderProbes();
             updateSelectionUI();
             closeCountryModal();
+        };
+
+        window.deleteProbe = function(id) { probes = probes.filter(p => p.id !== id); renderProbes(); };
+
+        function renderProbes() {
+            const list = document.getElementById('uuidList');
+            const emptyHint = document.getElementById('emptyHint');
+            const badge = document.getElementById('countBadge');
+            badge.innerHTML = `已添加 <strong>${probes.length}</strong> 个探针`;
+            if (!probes.length) { list.innerHTML = ''; emptyHint.style.display = 'block'; return; }
+            emptyHint.style.display = 'none';
+            list.innerHTML = probes.map(p => `
+                <div class="uuid-row">
+                    <span class="flag-big">${flagHtml(p.country[0], p.country[1])}</span>
+                    <span class="country-name-tag">${p.country[2]}</span>
+                    <input class="uuid-input" value="${p.uuid}" onchange="updateUuid('${p.id}', this.value)">
+                    <span class="cc-badge">${p.country[1]}</span>
+                    <button class="del-btn" onclick="deleteProbe('${p.id}')">✕</button>
+                </div>`).join('');
+        }
+
+        window.updateUuid = function(id, val) {
+            const p = probes.find(item => item.id === id);
+            if (p) p.uuid = val.trim();
         };
 
         function renderModalCountries(list) {
@@ -618,30 +658,6 @@
             const q = document.getElementById('modalSearch').value.trim().toLowerCase();
             const filtered = q ? COUNTRIES.filter(c => c[1].toLowerCase().includes(q) || c[2].toLowerCase().includes(q)) : COUNTRIES;
             renderModalCountries(filtered);
-        };
-
-        window.deleteProbe = function(id) { probes = probes.filter(p => p.id !== id); renderProbes(); };
-
-        function renderProbes() {
-            const list = document.getElementById('uuidList');
-            const emptyHint = document.getElementById('emptyHint');
-            const badge = document.getElementById('countBadge');
-            badge.innerHTML = `已添加 <strong>${probes.length}</strong> / 30 个探针`;
-            if (!probes.length) { list.innerHTML = ''; emptyHint.style.display = 'block'; return; }
-            emptyHint.style.display = 'none';
-            list.innerHTML = probes.map(p => `
-                <div class="uuid-row">
-                    <span class="flag-big">${flagHtml(p.country[0], p.country[1])}</span>
-                    <span class="country-name-tag">${p.country[2]}</span>
-                    <input class="uuid-input" value="${p.uuid}" onchange="updateUuid('${p.id}', this.value)">
-                    <span class="cc-badge">${p.country[1]}</span>
-                    <button class="del-btn" onclick="deleteProbe('${p.id}')">✕</button>
-                </div>`).join('');
-        }
-
-        window.updateUuid = function(id, val) {
-            const p = probes.find(item => item.id === id);
-            if (p) p.uuid = val.trim();
         };
 
         window.clearAll = function() {
@@ -681,12 +697,28 @@
             if (!server) { alert('填写面板地址'); return; }
             if (!secret) { alert('填写通信密钥'); return; }
             if (!probes.length) { alert('请先添加探针'); return; }
-            const uuidParam = probes.map(p => `${p.uuid}:${p.country[1]}`).join(',');
-            const apiUrl = `https://keep.nett.to/report?server=${safeEncode(server)}&secret=${safeEncode(secret)}&tls=${useTls}&uuid=${safeEncode(uuidParam)}`;
+            
+            const groupSize = 10; // 每10个探针为一组
+            const groups = [];
+            for (let i = 0; i < probes.length; i += groupSize) {
+                groups.push(probes.slice(i, i + groupSize));
+            }
+            
+            const urls = groups.map(group => {
+                const uuidParam = group.map(p => `${p.uuid}:${p.country[1]}`).join(',');
+                return `https://keep.nett.to/report?server=${safeEncodeServerOrSecret(server)}&secret=${safeEncodeServerOrSecret(secret)}&tls=${useTls}&uuid=${uuidParam}`;
+            });
+            
             const outUrl = document.getElementById('out-url');
-            outUrl.textContent = apiUrl;
+            outUrl.textContent = urls.join('\n');
             outUrl.classList.remove('placeholder-output');
-            const cronCmd = `urls=(\n  "${apiUrl}"\n)\n\nfor url in "\${urls[@]}"; do\n  curl -s \\\n    -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36" \\\n    "$url" &\ndone\nwait`;
+            
+            let cronCmd = `urls=(\n`;
+            urls.forEach(u => {
+                cronCmd += `  "${u}"\n`;
+            });
+            cronCmd += `)\n\nfor url in "\${urls[@]}"; do\n  curl -s \\\n    -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36" \\\n    "$url" &\ndone\nwait`;
+            
             const outCron = document.getElementById('out-cron');
             outCron.textContent = cronCmd;
             outCron.classList.remove('placeholder-output');
