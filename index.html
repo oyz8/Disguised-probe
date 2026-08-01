@@ -713,11 +713,16 @@
             outUrl.textContent = urls.join('\n');
             outUrl.classList.remove('placeholder-output');
             
-            let cronCmd = `urls=(\n`;
-            urls.forEach(u => {
-                cronCmd += `  "${u}"\n`;
+            let cronCmd = 'for url in \\\n';
+            urls.forEach((u, idx) => {
+                cronCmd += `  "${u}"`;
+                if (idx < urls.length - 1) {
+                    cronCmd += ' \\\n';
+                } else {
+                    cronCmd += '\n';
+                }
             });
-            cronCmd += `)\n\nfor url in "\${urls[@]}"; do\n  curl -s \\\n    -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36" \\\n    "$url" &\ndone\nwait`;
+            cronCmd += 'do\n  curl -s "$url" &\ndone\nwait';
             
             const outCron = document.getElementById('out-cron');
             outCron.textContent = cronCmd;
