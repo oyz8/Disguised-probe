@@ -158,13 +158,52 @@
             display: flex; align-items: center; gap: 8px; padding: 10px 12px;
             border-radius: var(--radius-sm); border: 1.5px solid transparent; background: #fafafc;
             cursor: pointer; font-size: 0.82rem; color: var(--text); transition: all var(--transition-fast);
+            user-select: none;
         }
         .c-btn-modal:hover { background: #f0f0f5; border-color: #d5d5da; }
+        .c-btn-modal.selected {
+            background: var(--accent-subtle);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
         .flag-modal { font-size: 1.4rem; line-height: 1; display: flex; align-items: center; }
         .flag-modal img { width: 22px; height: 16px; border-radius: 2px; }
         .info-modal { display: flex; flex-direction: column; }
         .name-modal { font-weight: 500; font-size: 0.8rem; }
         .code-modal { font-size: 0.7rem; color: var(--text-tertiary); }
+        
+        /* 多选底部操作栏 */
+        .modal-footer {
+            padding: 12px 22px 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+        }
+        .modal-footer .selection-info {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .modal-footer .btn-add-selected {
+            padding: 10px 22px;
+            background: var(--accent);
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-weight: 650;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+        .modal-footer .btn-add-selected:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .modal-footer .btn-add-selected:not(:disabled):hover {
+            background: var(--accent-hover);
+        }
+
         .probe-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .probe-count { font-size: 0.85rem; color: var(--text-secondary); }
         .uuid-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
@@ -313,6 +352,7 @@
         <img src="https://img.nezha.loc.cc/probe.png" class="logo-img" alt="探针">
         探针 <span class="accent">命令生成器</span>
     </h1>
+    <p>支持 200+ 国家和地区，可自由搭配</p>
 </header>
 
 <div class="wrap">
@@ -393,9 +433,16 @@
 
 <div class="modal-overlay" id="countryModalOverlay" onclick="closeCountryModalOutside(event)">
     <div class="modal-dialog" onclick="event.stopPropagation()">
-        <div class="modal-header"><h3>🌍 选择国家</h3><button class="modal-close" onclick="closeCountryModal()">✕</button></div>
+        <div class="modal-header"><h3>🌍 选择国家（可多选）</h3><button class="modal-close" onclick="closeCountryModal()">✕</button></div>
         <div class="modal-search"><input type="text" id="modalSearch" placeholder="搜索国家名称或代码" oninput="filterModalCountries()"></div>
-        <div class="modal-body"><div class="country-grid-modal" id="modalCountryGrid"></div><div id="modalNoResults" style="display:none;text-align:center;padding:30px;color:var(--text-tertiary);">未找到匹配的国家</div></div>
+        <div class="modal-body">
+            <div class="country-grid-modal" id="modalCountryGrid"></div>
+            <div id="modalNoResults" style="display:none;text-align:center;padding:30px;color:var(--text-tertiary);">未找到匹配的国家</div>
+        </div>
+        <div class="modal-footer">
+            <span class="selection-info" id="selectionInfo">已选 0 个国家</span>
+            <button class="btn-add-selected" id="btnAddSelected" onclick="addSelectedCountries()" disabled>添加选中国家</button>
+        </div>
     </div>
 </div>
 
@@ -478,6 +525,7 @@
 
         let probes = [];
         let useTls = true;
+        let selectedCountries = [];
 
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -499,6 +547,8 @@
         window.openCountryModal = function() {
             if (probes.length >= 30) { alert('最多30个探针'); return; }
             document.getElementById('modalSearch').value = '';
+            selectedCountries = [];
+            updateSelectionUI();
             renderModalCountries(COUNTRIES);
             document.getElementById('countryModalOverlay').classList.add('open');
             setTimeout(() => document.getElementById('modalSearch').focus(), 100);
@@ -506,16 +556,59 @@
         window.closeCountryModal = () => document.getElementById('countryModalOverlay').classList.remove('open');
         window.closeCountryModalOutside = (e) => { if(e.target.id==='countryModalOverlay') closeCountryModal(); };
 
+        function toggleCountrySelection(country) {
+            const index = selectedCountries.findIndex(c => c[1] === country[1]);
+            if (index > -1) {
+                selectedCountries.splice(index, 1);
+            } else {
+                selectedCountries.push(country);
+            }
+            updateSelectionUI();
+            renderModalCountries(window.currentFilteredList || COUNTRIES);
+        }
+
+        function updateSelectionUI() {
+            document.getElementById('selectionInfo').textContent = `已选 ${selectedCountries.length} 个国家`;
+            const btn = document.getElementById('btnAddSelected');
+            btn.disabled = selectedCountries.length === 0;
+        }
+
+        window.addSelectedCountries = function() {
+            if (selectedCountries.length === 0) return;
+            const availableSlots = 30 - probes.length;
+            if (availableSlots <= 0) {
+                alert('已达到30个探针上限');
+                return;
+            }
+            const toAdd = selectedCountries.slice(0, availableSlots);
+            toAdd.forEach(country => {
+                probes.push({
+                    id: Date.now() + Math.random().toString(36).substr(2,5),
+                    uuid: generateUUID(),
+                    country: country
+                });
+            });
+            if (toAdd.length < selectedCountries.length) {
+                alert(`仅添加了 ${toAdd.length} 个探针，已达上限30个`);
+            }
+            selectedCountries = [];
+            renderProbes();
+            updateSelectionUI();
+            closeCountryModal();
+        };
+
         function renderModalCountries(list) {
+            window.currentFilteredList = list;
             const grid = document.getElementById('modalCountryGrid');
             const noRes = document.getElementById('modalNoResults');
             grid.innerHTML = '';
             if (!list.length) { noRes.style.display = 'block'; return; }
             noRes.style.display = 'none';
             list.forEach(c => {
+                const isSelected = selectedCountries.some(sc => sc[1] === c[1]);
                 const btn = document.createElement('button');
-                btn.className = 'c-btn-modal';
-                btn.onclick = () => selectCountryAndAdd(c);
+                btn.className = 'c-btn-modal' + (isSelected ? ' selected' : '');
+                btn.onclick = () => toggleCountrySelection(c);
                 btn.innerHTML = `<span class="flag-modal">${flagHtml(c[0], c[1])}</span><span class="info-modal"><span class="name-modal">${c[2]}</span><span class="code-modal">${c[1]}</span></span>`;
                 grid.appendChild(btn);
             });
@@ -523,15 +616,9 @@
 
         window.filterModalCountries = function() {
             const q = document.getElementById('modalSearch').value.trim().toLowerCase();
-            renderModalCountries(q ? COUNTRIES.filter(c => c[1].toLowerCase().includes(q) || c[2].toLowerCase().includes(q)) : COUNTRIES);
+            const filtered = q ? COUNTRIES.filter(c => c[1].toLowerCase().includes(q) || c[2].toLowerCase().includes(q)) : COUNTRIES;
+            renderModalCountries(filtered);
         };
-
-        function selectCountryAndAdd(country) {
-            if (probes.length >= 30) { alert('最多30个探针'); closeCountryModal(); return; }
-            probes.push({ id: Date.now() + Math.random().toString(36).substr(2,5), uuid: generateUUID(), country });
-            renderProbes();
-            closeCountryModal();
-        }
 
         window.deleteProbe = function(id) { probes = probes.filter(p => p.id !== id); renderProbes(); };
 
