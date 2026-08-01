@@ -218,6 +218,85 @@
         .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .guide-item { background: #fafafc; border-radius: var(--radius-sm); padding: 14px 16px; border:1px solid var(--border); }
         .divider { height:1px; background:var(--border); margin:18px 0; }
+
+        /* 新增：截图展示卡片样式 */
+        .screenshot-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px 16px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: box-shadow var(--transition);
+        }
+        .screenshot-card:hover { box-shadow: var(--shadow-md); }
+        .screenshot-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            letter-spacing: 0.01em;
+        }
+        .screenshot-label .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.6); }
+        }
+        .screenshot-img-wrap {
+            display: inline-block;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            max-width: 100%;
+            line-height: 0;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .screenshot-img-wrap:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        .screenshot-img-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-width: 750px;
+        }
+        .screenshot-caption {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .screenshot-caption code {
+            background: #f1f1f5;
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-size: 0.73rem;
+            font-family: var(--font-mono);
+            color: var(--text);
+            letter-spacing: 0;
+        }
+        @media(max-width:640px) {
+            .screenshot-card { padding: 14px 12px 10px; }
+            .screenshot-label { font-size: 0.76rem; margin-bottom: 10px; }
+            .screenshot-caption { font-size: 0.7rem; }
+        }
+
         .footer-signature { text-align: center; padding: 24px 16px 32px; font-size: 0.8rem; color: var(--text-tertiary); display: flex; justify-content: center; gap: 6px; }
     </style>
 </head>
@@ -270,7 +349,7 @@
         <div class="card-header"><span class="step-num">3</span><span class="card-title">生成保活命令</span></div>
         <div class="tabs-row">
             <button class="tab-pill active" id="tabUrlBtn" onclick="switchTab('url')">🔗 API URL</button>
-            <button class="tab-pill" id="tabCronBtn" onclick="switchTab('cron')">⏱ 保活任务</button>
+            <button class="tab-pill" id="tabCronBtn" onclick="switchTab('cron')">⏱ 保活命令</button>
         </div>
         <div id="tab-url">
             <div class="info-box info">📌 直接在浏览器或 curl 调用的 API 地址测试</div>
@@ -295,6 +374,19 @@
             <div class="guide-item"><strong>API 端点</strong><code> https://keep.nett.to/report</code></div>
         </div>
     </div>
+
+    <div class="screenshot-card">
+        <div class="screenshot-label">
+            <span class="badge-dot"></span> 哪吒面板 · 计划任务截图参考
+        </div>
+        <div class="screenshot-img-wrap">
+            <img src="/nezha-task.png" alt="哪吒面板计划任务截图" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('afterend','<div style=\'padding:20px;color:var(--text-tertiary);font-size:0.85rem;\'>⚠️ 图片 /nezha-task.png 未找到，请确认路径</div>');">
+        </div>
+        <div class="screenshot-caption">
+            📋 将上方生成的命令粘贴到 <code>命令</code> 中，Cron 设为 <code>*/30 * * * * *</code>
+        </div>
+    </div>
+
 </div>
 
 <div class="footer-signature">
