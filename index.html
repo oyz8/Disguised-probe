@@ -219,7 +219,6 @@
         .guide-item { background: #fafafc; border-radius: var(--radius-sm); padding: 14px 16px; border:1px solid var(--border); }
         .divider { height:1px; background:var(--border); margin:18px 0; }
 
-        /* 新增：截图展示卡片样式 */
         .screenshot-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -241,7 +240,8 @@
             margin-bottom: 14px;
             letter-spacing: 0.01em;
         }
-        .screenshot-label .badge-dot {
+        .screenshot-label .badge-dot,
+        .badge-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -313,7 +313,6 @@
         <img src="https://img.nezha.loc.cc/probe.png" class="logo-img" alt="探针">
         探针 <span class="accent">命令生成器</span>
     </h1>
-    <p>自动生成 UUID · 点击国家即刻添加 · 一键生成保活命令</p>
 </header>
 
 <div class="wrap">
@@ -334,7 +333,7 @@
     <div class="card">
         <div class="card-header"><span class="step-num">2</span><span class="card-title">探针管理与添加</span></div>
         <div class="uuid-list" id="uuidList"></div>
-        <div class="empty-hint" id="emptyHint">📭 暂无探针，点击下方按钮选择国家直接添加</div>
+        <div class="empty-hint" id="emptyHint">📭 暂无探针，点击下方按钮添加国家</div>
         <div class="probe-summary">
             <span class="probe-count" id="countBadge">已添加 <strong>0</strong> / 30 个探针</span>
             <button class="btn-clear" onclick="clearAll()">🗑 清空全部</button>
@@ -377,25 +376,24 @@
 
     <div class="screenshot-card">
         <div class="screenshot-label">
-            <span class="badge-dot"></span> 哪吒面板 · 计划任务截图参考
+            <span class="badge-dot"></span> 哪吒面板 · 保活任务截图参考
         </div>
         <div class="screenshot-img-wrap">
-            <img src="/nezha-task.png" alt="哪吒面板计划任务截图" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('afterend','<div style=\'padding:20px;color:var(--text-tertiary);font-size:0.85rem;\'>⚠️ 图片 /nezha-task.png 未找到，请确认路径</div>');">
+            <img src="/nezha-task.png" alt="哪吒面板保活任务截图" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('afterend','<div style=\'padding:20px;color:var(--text-tertiary);font-size:0.85rem;\'>⚠️ 图片 /nezha-task.png 未找到，请确认路径</div>');">
         </div>
         <div class="screenshot-caption">
             📋 将上方生成的命令粘贴到 <code>命令</code> 中，Cron 设为 <code>*/30 * * * * *</code>
         </div>
     </div>
-
 </div>
 
 <div class="footer-signature">
-    <span>Made with</span><span style="color:var(--danger);">🟢</span><span>by</span><span class="by-name">oyz8</span><span class="dot-sep"></span><span>Keep Alive Generator</span>
+    <span>Made with</span><span class="badge-dot"></span><span>by</span><span class="by-name">oyz8</span><span class="dot-sep"></span><span>Keep Alive Generator</span>
 </div>
 
 <div class="modal-overlay" id="countryModalOverlay" onclick="closeCountryModalOutside(event)">
     <div class="modal-dialog" onclick="event.stopPropagation()">
-        <div class="modal-header"><h3>🌍 选择国家直接添加</h3><button class="modal-close" onclick="closeCountryModal()">✕</button></div>
+        <div class="modal-header"><h3>🌍 选择国家</h3><button class="modal-close" onclick="closeCountryModal()">✕</button></div>
         <div class="modal-search"><input type="text" id="modalSearch" placeholder="搜索国家名称或代码" oninput="filterModalCountries()"></div>
         <div class="modal-body"><div class="country-grid-modal" id="modalCountryGrid"></div><div id="modalNoResults" style="display:none;text-align:center;padding:30px;color:var(--text-tertiary);">未找到匹配的国家</div></div>
     </div>
