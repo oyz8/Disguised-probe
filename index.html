@@ -714,7 +714,7 @@
             if (!secret) { alert('填写通信密钥'); return; }
             if (!probes.length) { alert('请先添加探针'); return; }
             
-            const groupSize = 10; // 每10个探针为一组
+            const groupSize = 30; // 每30个探针为一组
             const groups = [];
             for (let i = 0; i < probes.length; i += groupSize) {
                 groups.push(probes.slice(i, i + groupSize));
